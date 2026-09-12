@@ -1,16 +1,21 @@
-# React + Vite
+# HelpDesk
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## Description
+HelpDesk is a full-stack MERN application that lets employees submit IT support tickets and lets IT staff manage and resolve them through a centralized dashboard. Employees create tickets with a title, category, priority, and description, and track their status. IT staff view all submitted tickets and update their status through Open, In Progress, and Resolved stages.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+We built this because IT support requests at many workplaces get lost in email or chat, this gives both sides a clear, trackable system.
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [Planning Materials (Trello)](https://trello.com/b/fqiYl2Yv/helpdesk-project-board)
+- [Back-end Repository](https://github.com/hassanelmaayati/helpdesk-backend.git)
 
-## Expanding the ESLint configuration
+## Attributions
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Technologies Used
+
+
+## Next Steps
+>>>>>>> 6c4f4fda8d5ff2b2801fcc52d8d0eaeb077322cf
