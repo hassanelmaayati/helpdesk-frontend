@@ -1,0 +1,1 @@
+one file per full page (Login.jsx, Signup.jsx, TicketDetail.jsx, etc.)
