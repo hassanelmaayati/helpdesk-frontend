@@ -1,22 +1,29 @@
 import { useEffect, useState } from 'react';
 import { getComments } from '../../services/commentService';
+import CommentForm from '../CommentForm/CommentForm';
 
 function CommentList({ ticketId, token }) {
   const [comments, setComments] = useState([]);
   const [message, setMessage] = useState('');
+  const [editingComment, setEditingComment] = useState(null);
+
+  const loadComments = async () => {
+    try {
+      const data = await getComments(ticketId, token);
+      setComments(data);
+    } catch (error) {
+      setMessage(error.message);
+    }
+  };
 
   useEffect(() => {
-    const loadComments = async () => {
-      try {
-        const data = await getComments(ticketId, token);
-        setComments(data);
-      } catch (error) {
-        setMessage(error.message);
-      }
-    };
-
     loadComments();
   }, [ticketId, token]);
+
+  const handleCommentUpdated = async () => {
+    setEditingComment(null);
+    await loadComments();
+  };
 
   return (
     <section>
@@ -34,9 +41,24 @@ function CommentList({ ticketId, token }) {
             <p>
               By: {comment.author?.name || 'Unknown user'}
             </p>
+
+            <button
+              type="button"
+              onClick={() => setEditingComment(comment)}
+            >
+              Edit
+            </button>
           </article>
         ))
       )}
+
+      <CommentForm
+        ticketId={ticketId}
+        token={token}
+        editingComment={editingComment}
+        onCommentUpdated={handleCommentUpdated}
+        onCancelEdit={() => setEditingComment(null)}
+      />
     </section>
   );
 }

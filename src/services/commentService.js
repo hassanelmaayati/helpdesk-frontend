@@ -43,4 +43,29 @@ const getComments = async (ticketId, token) => {
 };
 
 
-export { createComment , getComments};
+const updateComment = async (ticketId, commentId, content, token) => {
+  const response = await fetch(
+    `${BASE_URL}/tickets/${ticketId}/comments/${commentId}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        content,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to update comment');
+  }
+
+  return response.json();
+};
+
+
+
+
+export { createComment, getComments, updateComment };
