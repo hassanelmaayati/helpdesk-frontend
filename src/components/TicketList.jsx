@@ -1,19 +1,15 @@
-
-function TicketList({Tickets}){
-   return (
+function TicketList({ tickets }) {
+  return (
     <div>
-
-       {tickets.map((ticket) => (
-      <h3 key={ticket._id}>{ticket.title}</h3>
-
-))}
-         
-         
+      <h2>Tickets</h2>
+      {tickets.map((ticket) => (
+        <div key={ticket._id}>
+          <h3>{ticket.title}</h3>
+          <p>{ticket.status}</p>
+        </div>
+      ))}
     </div>
-   
-
-   )
-
+  )
 }
 
-export default TicketList;
+export default TicketList
