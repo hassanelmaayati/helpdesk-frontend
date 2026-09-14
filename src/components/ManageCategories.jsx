@@ -83,10 +83,13 @@ useEffect(() => {fetch('http://localhost:3001/categories')
     {categories.map((category) => (
   <div key={category._id}>
 {editId === category._id ? (
-  <input
-    value={name}
-    onChange={(event) => setName(event.target.value)}
-  />
+  <>
+    <input
+      value={name}
+      onChange={(event) => setName(event.target.value)}
+    />
+    <button onClick={() => handleUpdate(category._id)}>Save</button>
+  </>
 ) : (
   <p>{category.name}</p>
 )}
