@@ -22,13 +22,10 @@ const createComment = async (ticketId, content, token) => {
   return response.json();
 };
 
-
-
 const getComments = async (ticketId, token) => {
   const response = await fetch(
     `${BASE_URL}/tickets/${ticketId}/comments`,
     {
-      method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -42,5 +39,49 @@ const getComments = async (ticketId, token) => {
   return response.json();
 };
 
+const updateComment = async (ticketId, commentId, content, token) => {
+  const response = await fetch(
+    `${BASE_URL}/tickets/${ticketId}/comments/${commentId}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        content,
+      }),
+    }
+  );
 
-export { createComment , getComments};
+  if (!response.ok) {
+    throw new Error('Failed to update comment');
+  }
+
+  return response.json();
+};
+
+const deleteComment = async (ticketId, commentId, token) => {
+  const response = await fetch(
+    `${BASE_URL}/tickets/${ticketId}/comments/${commentId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to delete comment');
+  }
+
+  return response.json();
+};
+
+export {
+  createComment,
+  getComments,
+  updateComment,
+  deleteComment,
+};
