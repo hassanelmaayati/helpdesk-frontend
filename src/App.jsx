@@ -7,7 +7,7 @@ import TicketForm from './pages/TicketForm';
 import TicketDetail from './pages/TicketDetail';
 import ManageCategories from './components/ManageCategories';
 import ProtectedRoute from './components/ProtectedRoute';
-import ManageCategories from './components/ManageCategories'
+
 function App() {
   return (
     <Routes>

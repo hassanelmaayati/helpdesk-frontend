@@ -6,6 +6,8 @@ function TicketList({ tickets }) {
         <div key={ticket._id}>
           <h3>{ticket.title}</h3>
           <p>{ticket.status}</p>
+          <p>{ticket.priority}</p>
+          <p>{ticket.category.name}</p>
         </div>
       ))}
     </div>

@@ -1,35 +1,31 @@
 import { useEffect, useState } from 'react'
+import api from '../services/api'
 function ManageCategories() {
     const [categories, setCategories] = useState([]) ;
     const [name, setName] = useState('');
     const [editId, setEditId] = useState(null)
 
-
 const handleSubmit = (event) => {
   event.preventDefault()
 
-  fetch('http://localhost:3001/categories', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: name
-    })
+  api.post('/categories', {
+    name: name
   })
-    .then((response) => response.json())
-  .then((data) => {
-  setCategories((currentCategories) => [...currentCategories, data])
-})
-setName('');
+    .then((response) => response.data)
+    .then((data) => {
+      setCategories((currentCategories) => [...currentCategories, data])
+    })
+
+  setName('')
 }
 
 
+
+
+
 const handleDelete = (id) => {
-  fetch(`http://localhost:3001/categories/${id}`, {
-    method: 'DELETE'
-  })
-    .then((response) => response.json())
+  api.delete(`/categories/${id}`)
+    .then((response) => response.data)
     .then(() => {
       setCategories((currentCategories) =>
         currentCategories.filter((category) => category._id !== id)
@@ -37,18 +33,11 @@ const handleDelete = (id) => {
     })
 }
 
-
 const handleUpdate = (id) => {
-  fetch(`http://localhost:3001/categories/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: name
-    })
+  api.put(`/categories/${id}`, {
+    name: name
   })
-    .then((response) => response.json())
+    .then((response) => response.data)
     .then((data) => {
       setCategories((currentCategories) =>
         currentCategories.map((category) =>
@@ -61,12 +50,17 @@ const handleUpdate = (id) => {
 }
 
 
-useEffect(() => {fetch('http://localhost:3001/categories')
-    .then((response) => response.json())
+
+
+useEffect(() => {
+  api.get('/categories')
+    .then((response) => response.data)
     .then((data) => {
       setCategories(data)
     })
 }, [])
+
+
 
   return (
     <div>
