@@ -22,4 +22,25 @@ const createComment = async (ticketId, content, token) => {
   return response.json();
 };
 
-export { createComment };
+
+
+const getComments = async (ticketId, token) => {
+  const response = await fetch(
+    `${BASE_URL}/tickets/${ticketId}/comments`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to get comments');
+  }
+
+  return response.json();
+};
+
+
+export { createComment , getComments};
