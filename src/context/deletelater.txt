@@ -1,1 +1,0 @@
-where we'll store auth state (who's logged in) so any page can access it

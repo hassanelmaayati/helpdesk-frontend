@@ -1,1 +1,0 @@
-smaller reusable pieces (TicketList, CommentForm, etc.)
