@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getComments } from '../../services/commentService';
+import { getComments, deleteComment } from '../../services/commentService';
 import CommentForm from '../CommentForm/CommentForm';
 
 function CommentList({ ticketId, token }) {
@@ -25,6 +25,16 @@ function CommentList({ ticketId, token }) {
     await loadComments();
   };
 
+  const handleDelete = async (commentId) => {
+    try {
+      await deleteComment(ticketId, commentId, token);
+      await loadComments();
+      setMessage('Comment deleted successfully!');
+    } catch (error) {
+      setMessage(error.message);
+    }
+  };
+
   return (
     <section>
       <h2>Comments</h2>
@@ -47,6 +57,13 @@ function CommentList({ ticketId, token }) {
               onClick={() => setEditingComment(comment)}
             >
               Edit
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleDelete(comment._id)}
+            >
+              Delete
             </button>
           </article>
         ))
