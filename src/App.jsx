@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import EmployeeDashboard from './pages/EmployeeDashboard';
-import ITStaffDashboard from './pages/ITStaffDashboard';
+import EmployeeDashboard from './components/EmployeeDashboard';
+import ITStaffDashboard from './components/ITStaffDashboard';
 import TicketForm from './pages/TicketForm';
 import TicketDetail from './pages/TicketDetail';
-import ManageCategories from './pages/ManageCategories';
+import ManageCategories from './components/ManageCategories';
 import ProtectedRoute from './components/ProtectedRoute';
 import ManageCategories from './components/ManageCategories'
 function App() {
