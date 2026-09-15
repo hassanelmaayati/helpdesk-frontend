@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
+import SignIn from './pages/SignIn';
 import Signup from './pages/Signup';
 import Home from './pages/Home';
 import EmployeeDashboard from './components/EmployeeDashboard/EmployeeDashboard';
@@ -14,7 +14,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
 
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<SignIn />} />
+      <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<Signup />} />
 
       <Route
