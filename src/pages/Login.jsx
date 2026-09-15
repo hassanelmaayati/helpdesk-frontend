@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 
 function Login() {
-  const { login, user } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,8 +13,12 @@ function Login() {
     e.preventDefault();
     setError('');
     try {
-      await login(email, password);
-      navigate('/employee-dashboard');
+      const loggedInUser = await login(email, password);
+      if (loggedInUser.role === 'it-staff') {
+        navigate('/it-dashboard');
+      } else {
+        navigate('/employee-dashboard');
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
     }

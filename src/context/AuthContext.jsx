@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
     setToken(res.data.token);
     localStorage.setItem('user', JSON.stringify(res.data.user));
     localStorage.setItem('token', res.data.token);
+    return res.data.user;
   };
 
   const signup = async (name, email, password, role) => {
