@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import StatCards from './StatCards';
-import TicketList from './TicketList';
-import api from '../services/api';
+import StatCards from '../StatCards/StatCards';
+import TicketList from '../TicketList/TicketList';
+import api from '../../services/api';
 
 function ITStaffDashboard() {
   const [tickets, setTickets] = useState([]);
@@ -16,18 +16,30 @@ function ITStaffDashboard() {
   const resolved = tickets.filter((t) => t.status === 'Resolved').length;
 
   const filteredTickets =
-    statusFilter === 'All' ? tickets : tickets.filter((t) => t.status === statusFilter);
+    statusFilter === 'All'
+      ? tickets
+      : tickets.filter((t) => t.status === statusFilter);
 
   return (
     <div>
       <h2>IT Staff Dashboard</h2>
-      <StatCards open={open} inProgress={inProgress} resolved={resolved} />
-      <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+
+      <StatCards
+        open={open}
+        inProgress={inProgress}
+        resolved={resolved}
+      />
+
+      <select
+        value={statusFilter}
+        onChange={(e) => setStatusFilter(e.target.value)}
+      >
         <option value="All">All</option>
         <option value="Open">Open</option>
         <option value="In Progress">In Progress</option>
         <option value="Resolved">Resolved</option>
       </select>
+
       <TicketList tickets={filteredTickets} />
     </div>
   );

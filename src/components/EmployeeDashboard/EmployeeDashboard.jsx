@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import TicketList from './TicketList';
-import api from '../services/api';
+import TicketList from '../TicketList/TicketList';
+import api from '../../services/api';
 
 function EmployeeDashboard() {
   const [tickets, setTickets] = useState([]);
