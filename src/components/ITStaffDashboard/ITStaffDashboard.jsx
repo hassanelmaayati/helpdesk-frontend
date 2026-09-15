@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react'
-import StatCards from './StatCards'
-import TicketList from './TicketList'
-
-const [tickets, setTickets] = useState([])
+import StatCards from '../StatCards/StatCards'
+import TicketList from '../TicketList/TicketList'
+import api from '../../services/api'
 
 function ITStaffDashboard(){
+  
+const [tickets, setTickets] = useState([])
+
     useEffect(() => {
-  fetch('http://localhost:3001/tickets')
-    .then((response) => response.json())
+ api.get('/tickets').then((response) => response.json())
     .then((data) => {
       setTickets(data)
     })
 }, [])
     const open = tickets.filter((ticket) => ticket.status === 'Open').length
-    const inProgress = tickets.filter((ticket) => ticket.status === 'In Progress').length
+    const inProgress = tickets.filter((ticket) => ticket.status === 'In-Progress').length
     const Resolved = tickets.filter((ticket) => ticket.status === 'Resolved').length
     const [statusFilter, setStatusFilter] = useState('All')
 
@@ -27,7 +28,7 @@ function ITStaffDashboard(){
     <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
   <option value="All">All</option>
   <option value="Open">Open</option>
-  <option value="In Progress">In Progress</option>
+  <option value="In-Progress">In Progress</option>
   <option value="Resolved">Resolved</option>
 </select>
      <TicketList tickets={filteredTickets} />
