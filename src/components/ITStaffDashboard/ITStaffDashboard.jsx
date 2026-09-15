@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import StatCards from './StatCards'
-import TicketList from './TicketList'
-import api from '../services/api'
+import StatCards from '../StatCards/StatCards'
+import TicketList from '../TicketList/TicketList'
+import api from '../../services/api'
 
 function ITStaffDashboard(){
   
