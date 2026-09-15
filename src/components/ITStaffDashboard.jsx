@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import StatCards from "./StatCards";
 import TicketList from "./TicketList";
 
-const [tickets, setTickets] = useState([]);
-
 function ITStaffDashboard() {
+  const [tickets, setTickets] = useState([]);
+
   useEffect(() => {
     fetch("http://localhost:3001/tickets")
       .then((response) => response.json())
