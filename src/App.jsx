@@ -6,8 +6,8 @@ import ITStaffDashboard from './components/ITStaffDashboard/ITStaffDashboard';
 import TicketForm from './pages/TicketForm';
 import TicketDetail from './pages/TicketDetail';
 import ManageCategories from './components/ManageCategories/ManageCategories';
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
   return (
     <Routes>
