@@ -28,7 +28,7 @@ function ITStaffDashboard() {
   return (
     <div>
       <h2>IT Staff Dashboard</h2>
-      <StatCards open={open} inProgress={inProgress} resolved={resolved} />
+      <StatCards open={open} inProgress={inProgress} resolved={Resolved} />
       <select
         value={statusFilter}
         onChange={(event) => setStatusFilter(event.target.value)}
