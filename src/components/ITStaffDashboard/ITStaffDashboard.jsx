@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import StatCards from '../StatCards/StatCards';
 import TicketList from '../TicketList/TicketList';
 import api from '../../services/api';
@@ -24,6 +25,14 @@ function ITStaffDashboard() {
     <div>
       <h2>IT Staff Dashboard</h2>
 
+      <Link to="/tickets/new">
+        <button>New Ticket</button>
+      </Link>
+
+      <Link to="/categories">
+        <button>Manage Categories</button>
+      </Link>
+
       <StatCards
         open={open}
         inProgress={inProgress}
@@ -46,3 +55,4 @@ function ITStaffDashboard() {
 }
 
 export default ITStaffDashboard;
+
