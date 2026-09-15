@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import api from '../services/api'
+import { indexCategory, createCategory, updateCategory, deleteCategory } from '../services/categoryService'
 function ManageCategories() {
     const [categories, setCategories] = useState([]) ;
     const [name, setName] = useState('');
@@ -8,53 +8,42 @@ function ManageCategories() {
 const handleSubmit = (event) => {
   event.preventDefault()
 
-  api.post('/categories', {
-    name: name
+createCategory(name, localStorage.getItem('token'))
+  .then((data) => {
+    setCategories((currentCategories) => [...currentCategories, data])
   })
-    .then((response) => response.data)
-    .then((data) => {
-      setCategories((currentCategories) => [...currentCategories, data])
-    })
 
   setName('')
 }
 
 
-
-
-
 const handleDelete = (id) => {
-  api.delete(`/categories/${id}`)
-    .then((response) => response.data)
-    .then(() => {
-      setCategories((currentCategories) =>
-        currentCategories.filter((category) => category._id !== id)
-      )
-    })
+ deleteCategory(id, localStorage.getItem('token'))
+  .then(() => {
+    setCategories((currentCategories) =>
+      currentCategories.filter((category) => category._id !== id)
+    )
+  })
 }
 
 const handleUpdate = (id) => {
-  api.put(`/categories/${id}`, {
-    name: name
-  })
-    .then((response) => response.data)
-    .then((data) => {
-      setCategories((currentCategories) =>
-        currentCategories.map((category) =>
-          category._id === id ? data : category
-        )
+  updateCategory(id, name, localStorage.getItem('token'))
+  .then((data) => {
+    setCategories((currentCategories) =>
+      currentCategories.map((category) =>
+        category._id === id ? data : category
       )
-      setName('')
-      setEditId(null)
-    })
+    )
+    setName('')
+    setEditId(null)
+  })
 }
 
 
 
 
 useEffect(() => {
-  api.get('/categories')
-    .then((response) => response.data)
+  indexCategory(localStorage.getItem('token'))
     .then((data) => {
       setCategories(data)
     })

@@ -3,9 +3,10 @@ import StatCards from './StatCards'
 import TicketList from './TicketList'
 import api from '../services/api'
 
+function ITStaffDashboard(){
+  
 const [tickets, setTickets] = useState([])
 
-function ITStaffDashboard(){
     useEffect(() => {
  api.get('/tickets').then((response) => response.json())
     .then((data) => {
