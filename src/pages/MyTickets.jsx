@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar/Sidebar";
-import { useAuth } from "../context/useAuth";
 import api from "../services/api";
 import "./MyTickets.css";
-
 function MyTickets() {
-  const { user } = useAuth();
 
   const [tickets, setTickets] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +12,7 @@ function MyTickets() {
 
   useEffect(() => {
     api
-      .get("/tickets")
+      .get("/tickets/my")
       .then((res) => {
         if (Array.isArray(res.data)) {
           setTickets(res.data);
@@ -28,17 +25,10 @@ function MyTickets() {
       });
   }, []);
 
-  const myTickets = tickets.filter((ticket) => {
-    const createdById =
-      ticket.createdBy?._id ||
-      ticket.createdBy?.id ||
-      ticket.createdBy;
+ 
 
-    return createdById === user?._id || createdById === user?.id;
-  });
-
-  const filteredTickets = myTickets.filter((ticket) => {
-    const title = ticket.title || "";
+const filteredTickets = tickets.filter((ticket) => {
+        const title = ticket.title || "";
     const search = searchTerm.toLowerCase().trim();
 
     const matchesSearch = title.toLowerCase().includes(search);
