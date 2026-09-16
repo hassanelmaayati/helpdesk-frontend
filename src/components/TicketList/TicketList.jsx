@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './TicketList.css';
 
 function TicketList({ tickets = [] }) {
@@ -18,21 +19,29 @@ function TicketList({ tickets = [] }) {
       <div className="inbox-ticket-list">
         {tickets.length > 0 ? (
           tickets.map((ticket, index) => (
-            <div key={ticket.id || ticket._id || index} className="inbox-ticket-card">
+            <Link
+              to={`/tickets/${ticket._id}`}
+              key={ticket.id || ticket._id || index}
+              className="inbox-ticket-card"
+            >
               <div className="card-left-section">
                 <input type="checkbox" className="ticket-checkbox" />
+
                 <div className="user-avatar">
                   {ticket.createdByName ? ticket.createdByName.charAt(0) : 'U'}
                 </div>
+
                 <div className="ticket-details">
                   <div className="ticket-title-row">
                     <span className="ticket-ref-id">
                       (#{ticket.ticketId || ticket.id || `HOSK-AAA4-00${index + 1}`})
                     </span>
+
                     <span className="ticket-subject">
                       {ticket.title || ticket.subject || 'Ticket Subject'}
                     </span>
                   </div>
+
                   <div className="ticket-meta">
                     From: <span className="meta-bold">{ticket.createdByName || 'User'}</span> | 
                     Assigned To: <span className="meta-bold">{ticket.assignedTo || 'Unassigned'}</span> | 
@@ -42,11 +51,19 @@ function TicketList({ tickets = [] }) {
               </div>
 
               <div className="card-right-section">
-                <span className={`status-badge ${ticket.priority?.toLowerCase() === 'high' ? 'overdue' : 'due-today'}`}>
-                  {ticket.priority?.toLowerCase() === 'high' ? 'Overdue' : 'Due Today'}
+                <span
+                  className={`status-badge ${
+                    ticket.priority?.toLowerCase() === 'high'
+                      ? 'overdue'
+                      : 'due-today'
+                  }`}
+                >
+                  {ticket.priority?.toLowerCase() === 'high'
+                    ? 'Overdue'
+                    : 'Due Today'}
                 </span>
               </div>
-            </div>
+            </Link>
           ))
         ) : (
           <p className="empty-state-text">No tickets found.</p>

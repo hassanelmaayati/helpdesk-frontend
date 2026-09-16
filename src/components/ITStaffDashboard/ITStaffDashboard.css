@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .it-dashboard-header h1 {
@@ -32,10 +32,19 @@
 }
 
 .it-stats {
-  margin-bottom: 28px;
+  margin-bottom: 16px;
+  width: 100%;
+  padding: 0;
+}
+
+.it-stats section {
+  width: 100%;
+  padding: 0;
 }
 
 .it-dashboard-section {
+  width: 100%;
+  padding: 0;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
