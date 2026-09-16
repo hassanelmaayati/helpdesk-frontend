@@ -74,7 +74,7 @@ function TicketForm() {
       <main className="ticket-form-page">
         <header className="ticket-form-header">
           <h2>
-            {isEdit ? 'EDIT TICKET' : 'CREATE NEW TICKET'}
+            {isEdit ? 'Edit Ticket' : 'Create New Ticket'}
           </h2>
 
           <p>
@@ -91,7 +91,7 @@ function TicketForm() {
           >
             <div className="ticket-form-field">
               <label htmlFor="ticket-title">
-                TITLE
+                Title
               </label>
 
               <input
@@ -106,7 +106,7 @@ function TicketForm() {
             <div className="ticket-form-row">
               <div className="ticket-form-field">
                 <label htmlFor="ticket-category">
-                  CATEGORY
+                  Category
                 </label>
 
                 <select
@@ -116,7 +116,7 @@ function TicketForm() {
                   required
                 >
                   <option value="">
-                    Select Category
+                    Select category
                   </option>
 
                   {categories.map((c) => (
@@ -129,7 +129,7 @@ function TicketForm() {
 
               <div className="ticket-form-field">
                 <label htmlFor="ticket-priority">
-                  PRIORITY
+                  Priority
                 </label>
 
                 <select
@@ -140,14 +140,14 @@ function TicketForm() {
                   <option value="Low">Low</option>
                   <option value="Medium">Medium</option>
                   <option value="High">High</option>
-                  <option value="Urgent">Urgent</option>
+                  <option value="Urgent!">Urgent</option>
                 </select>
               </div>
             </div>
 
             <div className="ticket-form-field">
               <label htmlFor="ticket-description">
-                DESCRIPTION
+                Description
               </label>
 
               <textarea
@@ -161,7 +161,7 @@ function TicketForm() {
 
             <div className="ticket-form-field">
               <label htmlFor="ticket-contact">
-                CONTACT INFORMATION
+                Contact Information
               </label>
 
               <input
@@ -185,14 +185,14 @@ function TicketForm() {
                 className="ticket-cancel-button"
                 onClick={() => navigate(-1)}
               >
-                CANCEL
+                Cancel
               </button>
 
               <button
                 type="submit"
                 className="ticket-submit-button"
               >
-                {isEdit ? 'UPDATE TICKET' : 'SUBMIT TICKET'}
+                {isEdit ? 'Update Ticket' : 'Submit Ticket'}
               </button>
             </div>
           </form>
