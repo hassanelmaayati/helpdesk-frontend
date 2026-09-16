@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import StatCards from '../StatCards/StatCards';
 import TicketList from '../TicketList/TicketList';
 import Sidebar from '../Sidebar/Sidebar';
@@ -12,11 +12,18 @@ function ITStaffDashboard() {
   const location = useLocation();
 
   useEffect(() => {
-    api.get('/tickets').then((res) => setTickets(res.data));
+    api
+      .get('/tickets')
+      .then((res) => {
+        setTickets(Array.isArray(res.data) ? res.data : []);
+      })
+      .catch(() => {
+        setTickets([]);
+      });
   }, []);
 
   const open = tickets.filter((t) => t.status === 'Open').length;
-const inProgress = tickets.filter((t) => t.status === 'In-Progress').length;
+  const inProgress = tickets.filter((t) => t.status === 'In-Progress').length;
   const resolved = tickets.filter((t) => t.status === 'Resolved').length;
 
   const filteredTickets =
@@ -26,14 +33,15 @@ const inProgress = tickets.filter((t) => t.status === 'In-Progress').length;
 
   const isAllTicketsPage = location.pathname === '/all-tickets';
 
- const displayedTickets = isAllTicketsPage
-  ? filteredTickets
-  : [...filteredTickets]
-      .sort(
-        (a, b) =>
-          new Date(b.createdAt) - new Date(a.createdAt)
-      )
-      .slice(0, 6);
+  const displayedTickets = isAllTicketsPage
+    ? filteredTickets
+    : [...filteredTickets]
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt) - new Date(a.createdAt)
+        )
+        .slice(0, 6);
+
   return (
     <div className="it-dashboard-layout">
       <Sidebar />
@@ -42,10 +50,10 @@ const inProgress = tickets.filter((t) => t.status === 'In-Progress').length;
         <header className="it-dashboard-header">
           <div>
             <h1>
-  {isAllTicketsPage
-    ? 'All Tickets'
-    : 'IT Staff Dashboard'}
-</h1>
+              {isAllTicketsPage
+                ? 'All Tickets'
+                : 'IT Staff Dashboard'}
+            </h1>
 
             <p>
               {isAllTicketsPage
@@ -53,7 +61,6 @@ const inProgress = tickets.filter((t) => t.status === 'In-Progress').length;
                 : 'Overview of support tickets'}
             </p>
           </div>
-
         </header>
 
         {!isAllTicketsPage && (

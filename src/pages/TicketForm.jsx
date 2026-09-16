@@ -23,20 +23,30 @@ function TicketForm() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    getCategories().then((res) => setCategories(res.data));
+    getCategories()
+      .then((res) => {
+        setCategories(Array.isArray(res.data) ? res.data : []);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
   }, []);
 
   useEffect(() => {
     if (isEdit) {
-      getTicket(id).then((res) => {
-        const t = res.data;
+      getTicket(id)
+        .then((res) => {
+          const t = res.data;
 
-        setTitle(t.title);
-        setDescription(t.description);
-        setPriority(t.priority);
-        setCategory(t.category._id);
-        setContactInfo(t.contactInfo);
-      });
+          setTitle(t.title || '');
+          setDescription(t.description || '');
+          setPriority(t.priority || 'Low');
+          setCategory(t.category?._id || '');
+          setContactInfo(t.contactInfo || '');
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
     }
   }, [id, isEdit]);
 
@@ -180,23 +190,23 @@ function TicketForm() {
             )}
 
             <div className="ticket-form-actions">
-  {isEdit && (
-    <button
-      type="button"
-      className="ticket-cancel-button"
-      onClick={() => navigate(-1)}
-    >
-      Cancel
-    </button>
-  )}
+              {isEdit && (
+                <button
+                  type="button"
+                  className="ticket-cancel-button"
+                  onClick={() => navigate(-1)}
+                >
+                  Cancel
+                </button>
+              )}
 
-  <button
-    type="submit"
-    className="ticket-submit-button"
-  >
-    {isEdit ? 'Update Ticket' : 'Submit Ticket'}
-  </button>
-</div>
+              <button
+                type="submit"
+                className="ticket-submit-button"
+              >
+                {isEdit ? 'Update Ticket' : 'Submit Ticket'}
+              </button>
+            </div>
           </form>
         </div>
       </main>
