@@ -69,18 +69,18 @@
 }
 
 .ticket-detail-status.open {
-  background: #dbeafe;
-  color: #2563eb;
+  background: #e0f2fe;
+  color: #0369a1;
 }
 
 .ticket-detail-status.in-progress {
   background: #fef3c7;
-  color: #d97706;
+  color: #b45309;
 }
 
 .ticket-detail-status.resolved {
-  background: #dcfce7;
-  color: #16a34a;
+  background: #d1fae5;
+  color: #047857;
 }
 
 .ticket-detail-info {

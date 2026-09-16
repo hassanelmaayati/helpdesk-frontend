@@ -5,16 +5,6 @@ import './TicketList.css';
 function TicketList({ tickets = [] }) {
   return (
     <div className="inbox-container">
-      <div className="inbox-toolbar">
-        <input type="checkbox" className="select-all-checkbox" />
-
-        <select className="toolbar-select">
-          <option>10</option>
-          <option>25</option>
-          <option>50</option>
-        </select>
-      </div>
-
       <div className="inbox-ticket-list">
         {tickets.length > 0 ? (
           tickets.map((ticket, index) => {
@@ -31,6 +21,11 @@ function TicketList({ tickets = [] }) {
 
             const status =
               ticket.status || 'Open';
+
+            const displayStatus =
+              status === 'In-Progress'
+                ? 'In Progress'
+                : status;
 
             return (
               <Link
@@ -62,9 +57,10 @@ function TicketList({ tickets = [] }) {
                   <span
                     className={`status-badge ${status
                       .toLowerCase()
-                      .replace(/\s+/g, '-')}`}
+                      .replace(/\s+/g, '-')
+                      .replace(/-+/g, '-')}`}
                   >
-                    {status}
+                    {displayStatus}
                   </span>
                 </div>
               </Link>
