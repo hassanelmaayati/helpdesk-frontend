@@ -3,11 +3,8 @@ import {
   LayoutDashboard,
   Ticket,
   Plus,
-  MessageCircle,
-  User,
-  Settings,
-  LogOut,
-  Folder
+  Folder,
+  LogOut
 } from 'lucide-react';
 import { useAuth } from '../../context/useAuth';
 import './Sidebar.css';
@@ -23,7 +20,7 @@ function Sidebar() {
 
       <nav className="sidebar-nav">
         <NavLink
-          to="/employee-dashboard"
+          to={user?.role === 'it-staff' ? '/it-dashboard' : '/employee-dashboard'}
           className={({ isActive }) =>
             isActive ? 'nav-item active' : 'nav-item'
           }
@@ -52,48 +49,20 @@ function Sidebar() {
           <span>Create Ticket</span>
         </NavLink>
 
-        <div className="sidebar-divider"></div>
-
-        <NavLink
-          to="/support"
-          className={({ isActive }) =>
-            isActive ? 'nav-item active' : 'nav-item'
-          }
-        >
-          <MessageCircle className="nav-icon" size={19} />
-          <span>Support</span>
-        </NavLink>
-
-        <NavLink
-          to="/profile"
-          className={({ isActive }) =>
-            isActive ? 'nav-item active' : 'nav-item'
-          }
-        >
-          <User className="nav-icon" size={19} />
-          <span>My Profile</span>
-        </NavLink>
-
-        <NavLink
-          to="/settings"
-          className={({ isActive }) =>
-            isActive ? 'nav-item active' : 'nav-item'
-          }
-        >
-          <Settings className="nav-icon" size={19} />
-          <span>Settings</span>
-        </NavLink>
-
         {user?.role === 'it-staff' && (
-          <NavLink
-            to="/categories"
-            className={({ isActive }) =>
-              isActive ? 'nav-item active' : 'nav-item'
-            }
-          >
-            <Folder className="nav-icon" size={19} />
-            <span>Categories</span>
-          </NavLink>
+          <>
+            <div className="sidebar-divider"></div>
+
+            <NavLink
+              to="/categories"
+              className={({ isActive }) =>
+                isActive ? 'nav-item active' : 'nav-item'
+              }
+            >
+              <Folder className="nav-icon" size={19} />
+              <span>Categories</span>
+            </NavLink>
+          </>
         )}
       </nav>
 
