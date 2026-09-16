@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import StatCards from '../StatCards/StatCards';
 import TicketList from '../TicketList/TicketList';
 import Sidebar from '../Sidebar/Sidebar';
@@ -9,6 +9,7 @@ import './ITStaffDashboard.css';
 function ITStaffDashboard() {
   const [tickets, setTickets] = useState([]);
   const [statusFilter, setStatusFilter] = useState('All');
+  const location = useLocation();
 
   useEffect(() => {
     api.get('/tickets').then((res) => setTickets(res.data));
@@ -23,6 +24,12 @@ function ITStaffDashboard() {
       ? tickets
       : tickets.filter((t) => t.status === statusFilter);
 
+  const isAllTicketsPage = location.pathname === '/all-tickets';
+
+  const displayedTickets = isAllTicketsPage
+    ? filteredTickets
+    : filteredTickets.slice(0, 4);
+
   return (
     <div className="it-dashboard-layout">
       <Sidebar />
@@ -30,28 +37,47 @@ function ITStaffDashboard() {
       <main className="it-dashboard-content">
         <header className="it-dashboard-header">
           <div>
-            <h1>IT STAFF DASHBOARD</h1>
-            <p>Overview of support tickets</p>
+            <h1>
+              {isAllTicketsPage
+                ? 'ALL TICKETS'
+                : 'IT STAFF DASHBOARD'}
+            </h1>
+
+            <p>
+              {isAllTicketsPage
+                ? 'Manage all support tickets'
+                : 'Overview of support tickets'}
+            </p>
           </div>
 
-          <div className="quick-action-buttons">
-            <Link to="/tickets/new" className="quick-action-button primary">
-              NEW TICKET
-            </Link>
+          {!isAllTicketsPage && (
+            <div className="quick-action-buttons">
+              <Link
+                to="/tickets/new"
+                className="quick-action-button primary"
+              >
+                NEW TICKET
+              </Link>
 
-            <Link to="/categories" className="quick-action-button">
-              MANAGE CATEGORIES
-            </Link>
-          </div>
+              <Link
+                to="/categories"
+                className="quick-action-button"
+              >
+                MANAGE CATEGORIES
+              </Link>
+            </div>
+          )}
         </header>
 
-        <section className="it-stats">
-          <StatCards
-            open={open}
-            inProgress={inProgress}
-            resolved={resolved}
-          />
-        </section>
+        {!isAllTicketsPage && (
+          <section className="it-stats">
+            <StatCards
+              open={open}
+              inProgress={inProgress}
+              resolved={resolved}
+            />
+          </section>
+        )}
 
         <section className="it-dashboard-section">
           <div className="it-section-header">
@@ -69,7 +95,7 @@ function ITStaffDashboard() {
             </select>
           </div>
 
-          <TicketList tickets={filteredTickets} />
+          <TicketList tickets={displayedTickets} />
         </section>
       </main>
     </div>
