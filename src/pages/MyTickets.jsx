@@ -1,34 +1,45 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar/Sidebar";
+import { useAuth } from "../context/useAuth";
 import api from "../services/api";
 import "./MyTickets.css";
-function MyTickets() {
 
+function MyTickets() {
+  const { user } = useAuth();
   const [tickets, setTickets] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("ALL LEVELS");
   const [selectedStatus, setSelectedStatus] = useState("ALL");
 
+  const userId = user?._id || user?.id;
+
   useEffect(() => {
     api
-      .get("/tickets/my")
+      .get("/tickets")
       .then((res) => {
-        if (Array.isArray(res.data)) {
-          setTickets(res.data);
-        } else if (res.data && Array.isArray(res.data.tickets)) {
-          setTickets(res.data.tickets);
-        }
+        const data = Array.isArray(res.data)
+          ? res.data
+          : res.data?.tickets || [];
+
+        setTickets(
+          data.filter((ticket) => {
+            const createdById =
+              ticket.createdBy?._id ||
+              ticket.createdBy?.id ||
+              ticket.createdBy;
+
+            return createdById === userId;
+          })
+        );
       })
-      .catch((err) => {
-        console.error("Failed to fetch tickets:", err);
+      .catch(() => {
+        setTickets([]);
       });
-  }, []);
+  }, [userId]);
 
- 
-
-const filteredTickets = tickets.filter((ticket) => {
-        const title = ticket.title || "";
+  const filteredTickets = tickets.filter((ticket) => {
+    const title = ticket.title || "";
     const search = searchTerm.toLowerCase().trim();
 
     const matchesSearch = title.toLowerCase().includes(search);

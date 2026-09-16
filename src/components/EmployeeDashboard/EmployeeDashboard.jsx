@@ -2,28 +2,37 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../Sidebar/Sidebar';
 import TicketList from '../TicketList/TicketList';
+import { useAuth } from '../../context/useAuth';
 import api from '../../services/api';
 import './EmployeeDashboard.css';
 
 function EmployeeDashboard() {
+  const { user } = useAuth();
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const userId = user?._id || user?.id;
 
   useEffect(() => {
     const fetchTickets = async () => {
       try {
+        const res = await api.get('/tickets');
 
-        const res = await api.get('/tickets/my');
-        
-        if (Array.isArray(res.data)) {
-          setTickets(res.data);
-        } else if (res.data && Array.isArray(res.data.tickets)) {
-          setTickets(res.data.tickets);
-        } else {
-          setTickets([]);
-        }
-      } catch (error) {
-        console.error('Failed to fetch tickets:', error);
+        const data = Array.isArray(res.data)
+          ? res.data
+          : res.data?.tickets || [];
+
+        setTickets(
+          data.filter((ticket) => {
+            const createdById =
+              ticket.createdBy?._id ||
+              ticket.createdBy?.id ||
+              ticket.createdBy;
+
+            return createdById === userId;
+          })
+        );
+      } catch {
         setTickets([]);
       } finally {
         setLoading(false);
@@ -31,7 +40,7 @@ function EmployeeDashboard() {
     };
 
     fetchTickets();
-  }, []);
+  }, [userId]);
 
   const openTickets = tickets.filter(
     (ticket) => ticket.status === 'Open'
@@ -45,13 +54,12 @@ function EmployeeDashboard() {
     (ticket) => ticket.status === 'Resolved'
   ).length;
 
-
   const recentTickets = [...tickets]
-  .sort(
-    (a, b) =>
-      new Date(b.createdAt) - new Date(a.createdAt)
-  )
-  .slice(0, 6);
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt) - new Date(a.createdAt)
+    )
+    .slice(0, 6);
 
   return (
     <div className="employee-dashboard-layout">
