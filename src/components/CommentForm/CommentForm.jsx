@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createComment, updateComment } from '../../services/commentService';
+import './CommentForm.css';
 
 function CommentForm({ ticketId, token, editingComment, onCommentUpdated, onCancelEdit }) {
   const [content, setContent] = useState('');
@@ -41,26 +42,33 @@ function CommentForm({ ticketId, token, editingComment, onCommentUpdated, onCanc
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{editingComment ? 'Edit Comment' : 'Add a Comment'}</h2>
+    <form onSubmit={handleSubmit} className="comment-form">
+      <h2>{editingComment ? 'EDIT COMMENT' : 'ADD A COMMENT'}</h2>
 
       <textarea
         value={content}
         onChange={(event) => setContent(event.target.value)}
         placeholder="Write your comment..."
+        className="comment-textarea"
       />
 
-      <button type="submit">
-        {editingComment ? 'Update Comment' : 'Add Comment'}
-      </button>
-
-      {editingComment && (
-        <button type="button" onClick={onCancelEdit}>
-          Cancel
+      <div className="comment-form-actions">
+        <button type="submit" className="comment-submit-button">
+          {editingComment ? 'UPDATE COMMENT' : 'ADD COMMENT'}
         </button>
-      )}
 
-      {message && <p>{message}</p>}
+        {editingComment && (
+          <button
+            type="button"
+            onClick={onCancelEdit}
+            className="comment-cancel-button"
+          >
+            CANCEL
+          </button>
+        )}
+      </div>
+
+      {message && <p className="comment-form-message">{message}</p>}
     </form>
   );
 }
