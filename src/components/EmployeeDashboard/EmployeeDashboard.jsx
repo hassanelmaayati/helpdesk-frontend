@@ -4,6 +4,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import api from '../../services/api';
 import './EmployeeDashboard.css';
 
+
 function EmployeeDashboard() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
