@@ -127,7 +127,7 @@ function MyTickets() {
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>
-              <option value="Urgent!">Urgent</option>
+              <option value="Urgent">Urgent</option>
             </select>
           </div>
 
