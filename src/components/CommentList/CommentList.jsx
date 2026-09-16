@@ -78,7 +78,8 @@ function CommentList({
                   className="comment-edit-button"
                   onClick={() => onEdit(comment)}
                 >
-                  EDIT
+                    Edit comment
+
                 </button>
 
                 <button
@@ -86,7 +87,8 @@ function CommentList({
                   className="comment-delete-button"
                   onClick={() => handleDelete(comment._id)}
                 >
-                  DELETE
+                    Delete comment
+
                 </button>
               </div>
             </article>

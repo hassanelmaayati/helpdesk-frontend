@@ -11,14 +11,14 @@
 .comment-form h2 {
   margin: 0;
   color: #334155;
-  font-size: 22px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1.4;
 }
 
 .comment-textarea {
   width: 100%;
-  min-height: 150px;
+  min-height: 180px;
   box-sizing: border-box;
   padding: 15px 17px;
   border: 1px solid #d6e0e8;
@@ -66,14 +66,14 @@
 }
 
 .comment-submit-button {
-  border: 1px solid #0f172a;
-  background: #0f172a;
-  color: #ffffff;
+  border: 1px solid #facc14;
+  background: #facc14;
+  color: #002244;
 }
 
 .comment-submit-button:hover {
-  background: #1e293b;
-  border-color: #1e293b;
+  background: #f8c400;
+  border-color: #f8c400;
 }
 
 .comment-cancel-button {
