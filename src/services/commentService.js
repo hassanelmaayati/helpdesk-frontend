@@ -1,82 +1,31 @@
-const BASE_URL = import.meta.env.VITE_BACK_END_SERVER_URL;
+import api from './api';
 
-const createComment = async (ticketId, content, token) => {
-  const response = await fetch(
-    `${BASE_URL}/tickets/${ticketId}/comments`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        content,
-      }),
-    }
+const createComment = async (ticketId, content) => {
+  const response = await api.post(
+    `/tickets/${ticketId}/comments`,
+    { content }
   );
-
-  if (!response.ok) {
-    throw new Error('Failed to create comment');
-  }
-
-  return response.json();
+  return response.data;
 };
 
-const getComments = async (ticketId, token) => {
-  const response = await fetch(
-    `${BASE_URL}/tickets/${ticketId}/comments`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to get comments');
-  }
-
-  return response.json();
+const getComments = async (ticketId) => {
+  const response = await api.get(`/tickets/${ticketId}/comments`);
+  return response.data;
 };
 
-const updateComment = async (ticketId, commentId, content, token) => {
-  const response = await fetch(
-    `${BASE_URL}/tickets/${ticketId}/comments/${commentId}`,
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        content,
-      }),
-    }
+const updateComment = async (ticketId, commentId, content) => {
+  const response = await api.put(
+    `/tickets/${ticketId}/comments/${commentId}`,
+    { content }
   );
-
-  if (!response.ok) {
-    throw new Error('Failed to update comment');
-  }
-
-  return response.json();
+  return response.data;
 };
 
-const deleteComment = async (ticketId, commentId, token) => {
-  const response = await fetch(
-    `${BASE_URL}/tickets/${ticketId}/comments/${commentId}`,
-    {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+const deleteComment = async (ticketId, commentId) => {
+  const response = await api.delete(
+    `/tickets/${ticketId}/comments/${commentId}`
   );
-
-  if (!response.ok) {
-    throw new Error('Failed to delete comment');
-  }
-
-  return response.json();
+  return response.data;
 };
 
 export {

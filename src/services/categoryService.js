@@ -1,82 +1,23 @@
-const BASE_URL = import.meta.env.VITE_BACK_END_SERVER_URL;
+import api from './api';
 
-const indexCategory = async (token) => {
-  const response = await fetch(
-    `${BASE_URL}/categories`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to get categories');
-  }
-
-  return response.json();
+const indexCategory = async () => {
+  const response = await api.get('/categories');
+  return response.data;
 };
 
-const createCategory = async (name, token) => {
-  const response = await fetch(
-    `${BASE_URL}/categories`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        name,
-      }),
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to create category');
-  }
-
-  return response.json();
+const createCategory = async (name) => {
+  const response = await api.post('/categories', { name });
+  return response.data;
 };
 
-const updateCategory = async (id, name, token) => {
-  const response = await fetch(
-    `${BASE_URL}/categories/${id}`,
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        name,
-      }),
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to update category');
-  }
-
-  return response.json();
+const updateCategory = async (id, name) => {
+  const response = await api.put(`/categories/${id}`, { name });
+  return response.data;
 };
 
-const deleteCategory = async (id, token) => {
-  const response = await fetch(
-    `${BASE_URL}/categories/${id}`,
-    {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to delete category');
-  }
-
-  return response.json();
+const deleteCategory = async (id) => {
+  const response = await api.delete(`/categories/${id}`);
+  return response.data;
 };
 
 export {

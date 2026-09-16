@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 const BASE_URL = import.meta.env.VITE_BACK_END_SERVER_URL;
 
 const api = axios.create({
@@ -12,5 +13,14 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const data = error.response?.data;
+    error.message = data?.error || data?.err || error.message;
+    return Promise.reject(error);
+  }
+);
 
 export default api;
