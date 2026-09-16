@@ -1,18 +1,20 @@
-
 /* =========================
    MANAGE CATEGORIES PAGE
    ========================= */
 
 .category-page-layout {
+  display: flex;
   min-height: 100vh;
-  background: #f4f7fb;
+  background: #f8fafc;
 }
 
 .category-page {
+  flex: 1;
   min-height: 100vh;
   margin-left: 240px;
-  padding: 40px;
-  background: #f4f7fb;
+  padding: 34px 42px 50px;
+  box-sizing: border-box;
+  background: #f8fafc;
 }
 
 /* Page Header */
@@ -24,34 +26,35 @@
 .category-page-header h2 {
   margin: 0;
   color: #002244;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 800;
-  letter-spacing: 0.4px;
+  line-height: 1.3;
+  letter-spacing: 0;
 }
 
 .category-page-header p {
-  margin: 7px 0 0;
-  color: #7b8e9f;
-  font-size: 14px;
+  margin: 9px 0 0;
+  color: #718096;
+  font-size: 17px;
+  line-height: 1.5;
 }
 
 /* Main Container */
 
 .category-container {
-  max-width: 900px;
-  background: #ffffff;
-  border: 1px solid #e3ebf2;
-  border-radius: 14px;
-  padding: 32px;
-  box-shadow: 0 4px 15px rgba(0, 34, 68, 0.04);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Add Category Form */
 
 .category-form {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
 }
 
 .category-form-field {
@@ -61,10 +64,10 @@
 }
 
 .category-form-field label {
-  color: #002244;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
+  color: #334155;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 .category-form-field input,
@@ -78,7 +81,7 @@
   color: #002244;
   padding: 12px 14px;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   outline: none;
   transition:
     border-color 0.2s ease,
@@ -102,8 +105,7 @@
 .category-form-actions {
   display: flex;
   justify-content: flex-end;
-  padding-top: 8px;
-  border-top: 1px solid #e8eef4;
+  margin-top: 18px;
 }
 
 .category-add-button {
@@ -114,9 +116,8 @@
   background: #facc14;
   color: #002244;
   font-family: inherit;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.3px;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
   transition:
     background-color 0.2s ease,
@@ -138,20 +139,25 @@
 /* Category List */
 
 .category-list {
-  margin-top: 32px;
-  border-top: 1px solid #e8eef4;
+  width: 100%;
+  margin-top: 24px;
+  padding: 24px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
 }
 
 .category-list-header {
-  padding: 22px 0 14px;
+  margin-bottom: 16px;
 }
 
 .category-list-header h3 {
   margin: 0;
-  color: #002244;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
+  color: #334155;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 /* Category Item */
@@ -161,14 +167,23 @@
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  padding: 16px 0;
-  border-top: 1px solid #e8eef4;
+  margin-bottom: 12px;
+  padding: 16px 18px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.category-item:last-child {
+  margin-bottom: 0;
 }
 
 .category-name {
   color: #334155;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
+  line-height: 1.5;
 }
 
 .category-edit-input {
@@ -191,9 +206,8 @@
   padding: 0 16px;
   border-radius: 8px;
   font-family: inherit;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.3px;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
   transition:
     background-color 0.2s ease,
@@ -218,7 +232,7 @@
 }
 
 .category-edit-button:hover {
-  background: #f8fafc;
+  background: #f1f5f9;
 }
 
 .category-delete-button {
@@ -231,33 +245,32 @@
   background: #feeaea;
 }
 
-/* =========================
-   RESPONSIVE
-   ========================= */
+/* Responsive */
 
 @media (max-width: 900px) {
   .category-page {
     margin-left: 210px;
-    padding: 28px;
-  }
-
-  .category-container {
-    padding: 26px;
+    padding: 28px 24px 40px;
   }
 }
 
 @media (max-width: 700px) {
   .category-page {
     margin-left: 0;
-    padding: 20px;
-  }
-
-  .category-container {
-    padding: 20px;
+    padding: 20px 16px 30px;
   }
 
   .category-page-header h2 {
-    font-size: 24px;
+    font-size: 28px;
+  }
+
+  .category-page-header p {
+    font-size: 16px;
+  }
+
+  .category-form,
+  .category-list {
+    padding: 20px;
   }
 
   .category-item {
