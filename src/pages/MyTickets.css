@@ -3,10 +3,6 @@
   background: #f4f7fb;
 }
 
-/* =========================
-   MAIN CONTENT
-   ========================= */
-
 .main-content {
   margin-left: 240px;
   min-height: 100vh;
@@ -14,7 +10,7 @@
 
 .inbox-page-container {
   background-color: #f4f7fb;
-  padding: 40px;
+  padding: 30px 40px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -23,43 +19,40 @@
 
 /* =========================
    PAGE HEADER
-   ========================= */
+========================= */
 
 .inbox-page-header {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .inbox-page-header h2 {
   margin: 0;
   color: #002244;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
   letter-spacing: 0.4px;
 }
 
 .sub-header-text {
-  margin: 7px 0 0;
+  margin: 5px 0 0;
   color: #7b8e9f;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 /* =========================
    FILTER BAR
-   ========================= */
+========================= */
 
 .filter-pill-bar {
   background-color: #ffffff;
   padding: 16px 20px;
   border: 1px solid #e3ebf2;
   border-radius: 14px;
-
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 120px;
   gap: 18px;
   align-items: center;
-
   margin-bottom: 20px;
-
   box-shadow: 0 4px 15px rgba(0, 34, 68, 0.04);
 }
 
@@ -76,25 +69,21 @@
   letter-spacing: 0.7px;
 }
 
-.pill-value {
-  color: #0084c7;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.pill-search-input {
+.pill-search-input,
+.pill-select-input {
   width: 100%;
   border: none;
   outline: none;
-
   background: transparent;
-
-  color: #002244;
+  color: #0084c7;
   font-family: inherit;
   font-size: 13px;
-  font-weight: 600;
-
+  font-weight: 700;
   padding: 0;
+}
+
+.pill-select-input {
+  cursor: pointer;
 }
 
 .pill-search-input::placeholder {
@@ -105,19 +94,14 @@
 .search-pill-btn {
   border: none;
   border-radius: 9px;
-
   padding: 11px 14px;
-
   background-color: #facc14;
   color: #002244;
-
   font-family: inherit;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.3px;
-
   cursor: pointer;
-
   transition: background-color 0.2s ease;
 }
 
@@ -126,25 +110,246 @@
 }
 
 /* =========================
-   TICKET INBOX
-   ========================= */
+   TICKET GRID
+========================= */
 
 .tickets-inbox-wrapper {
   flex: 1;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
 
-  background-color: #ffffff;
+.ticket-grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
 
-  border: 1px solid #e3ebf2;
-  border-radius: 14px;
+/* =========================
+   TICKET CARD
+========================= */
 
-  box-shadow: 0 4px 15px rgba(0, 34, 68, 0.04);
+.ticket-card-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px 20px;
 
+  min-height: 220px;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.ticket-card-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 34, 68, 0.07);
+}
+
+/* =========================
+   TOP HEADER
+========================= */
+
+.ticket-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ticket-card-user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.ticket-card-avatar {
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #eef2f6;
+  border-radius: 50%;
+
+  color: #526678;
+  font-size: 13px;
+}
+
+.ticket-card-id {
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.ticket-card-count {
+  color: #0369a1;
+  background: #e0f2fe;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  padding: 2px 6px;
+
+  border-radius: 10px;
+}
+
+.ticket-card-dot {
+  width: 5px;
+  height: 5px;
+
+  background: #009ef7;
+
+  border-radius: 50%;
+}
+
+/* Green status dot on the right */
+
+.ticket-card-status-dot {
+  width: 8px;
+  height: 8px;
+
+  background: #10b981;
+
+  border-radius: 50%;
+}
+
+/* =========================
+   SUBJECT
+========================= */
+
+.ticket-card-subj {
+  margin-top: 16px;
+
+  color: #0f172a;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  line-height: 1.5;
+
+  min-height: 20px;
+}
+
+/* =========================
+   METADATA
+========================= */
+
+.ticket-card-details {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  margin-top: 13px;
+  margin-bottom: 14px;
+
+  font-size: 12px;
+
+  color: #334155;
+
+  font-weight: 600;
+}
+
+.ticket-card-details > div {
+  line-height: 1.4;
+
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.detail-lbl {
+  color: #64748b;
+
+  font-weight: 700;
+
+  font-size: 10px;
+
+  letter-spacing: 0.2px;
+}
+
+/* =========================
+   FOOTER / VIEW DETAILS
+========================= */
+
+.ticket-card-footer {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: auto;
+
+  padding-top: 11px;
+
+  border-top: 1px solid #f1f5f9;
+}
+
+.view-details-btn {
+  background: #0f172a;
+
+  color: #ffffff;
+
+  padding: 7px 13px;
+
+  border-radius: 6px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  letter-spacing: 0.3px;
+
+  transition: background-color 0.2s ease;
+}
+
+.view-details-btn:hover {
+  background: #1e293b;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.dashboard-message {
+  padding: 40px;
+
+  text-align: center;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
 }
 
 /* =========================
    RESPONSIVE
-   ========================= */
+========================= */
+
+@media (max-width: 1200px) {
+  .ticket-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 @media (max-width: 1100px) {
   .filter-pill-bar {
@@ -158,7 +363,7 @@
   }
 
   .inbox-page-container {
-    padding: 28px;
+    padding: 24px;
   }
 }
 
@@ -168,14 +373,18 @@
   }
 
   .inbox-page-container {
-    padding: 20px;
+    padding: 16px;
   }
 
   .filter-pill-bar {
     grid-template-columns: 1fr;
   }
 
+  .ticket-grid-container {
+    grid-template-columns: 1fr;
+  }
+
   .inbox-page-header h2 {
-    font-size: 24px;
+    font-size: 22px;
   }
 }

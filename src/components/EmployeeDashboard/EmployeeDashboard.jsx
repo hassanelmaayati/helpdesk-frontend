@@ -156,19 +156,6 @@ function EmployeeDashboard() {
             </div>
           )}
         </section>
-
-        {/* Quick Actions */}
-        <section className="employee-quick-actions">
-          <h2>QUICK ACTIONS</h2>
-          <div className="quick-action-buttons">
-            <Link to="/tickets/new" className="quick-action-button primary">
-              SUBMIT NEW TICKET
-            </Link>
-            <Link to="/my-tickets" className="quick-action-button">
-              VIEW MY TICKETS
-            </Link>
-          </div>
-        </section>
       </main>
     </div>
   );
