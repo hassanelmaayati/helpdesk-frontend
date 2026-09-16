@@ -151,17 +151,19 @@
 }
 
 .ticket-status-select {
-  min-height: 44px;
-  padding: 0 14px;
+  width: 150px;
+  height: 44px;
+  padding: 0 20px;
   border: 1px solid #d6e0e8;
   border-radius: 8px;
   background: #ffffff;
   color: #334155;
   font-family: inherit;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   outline: none;
+  box-sizing: border-box;
 }
 
 .ticket-status-select:focus {
@@ -190,15 +192,14 @@
 
 .ticket-edit-button,
 .ticket-update-button {
-  border: 1px solid #0f172a;
-  background: #0f172a;
-  color: #ffffff;
+  border: 1px solid #facc14;
+  background: #facc14;
+  color: #002244;
 }
 
-.ticket-edit-button:hover,
 .ticket-update-button:hover {
-  background: #1e293b;
-  border-color: #1e293b;
+  background: #f8c400;
+  border-color: #f8c400;
 }
 
 .ticket-delete-button {

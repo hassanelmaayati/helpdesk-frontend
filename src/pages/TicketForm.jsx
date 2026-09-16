@@ -180,21 +180,23 @@ function TicketForm() {
             )}
 
             <div className="ticket-form-actions">
-              <button
-                type="button"
-                className="ticket-cancel-button"
-                onClick={() => navigate(-1)}
-              >
-                Cancel
-              </button>
+  {isEdit && (
+    <button
+      type="button"
+      className="ticket-cancel-button"
+      onClick={() => navigate(-1)}
+    >
+      Cancel
+    </button>
+  )}
 
-              <button
-                type="submit"
-                className="ticket-submit-button"
-              >
-                {isEdit ? 'Update Ticket' : 'Submit Ticket'}
-              </button>
-            </div>
+  <button
+    type="submit"
+    className="ticket-submit-button"
+  >
+    {isEdit ? 'Update Ticket' : 'Submit Ticket'}
+  </button>
+</div>
           </form>
         </div>
       </main>
