@@ -27,6 +27,7 @@ We built this because IT support requests at many workplaces get lost in email o
 
 ## Attributions
 
+- Icons: [Lucide](https://lucide.dev/) — used through the `lucide-react` library.
 
 
 ## Technologies Used
