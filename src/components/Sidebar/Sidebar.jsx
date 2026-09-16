@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import logoWhite from '../../assets/logo-white.png';
 import {
   LayoutDashboard,
   Ticket,
@@ -16,8 +17,12 @@ function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <h2>HELP DESK</h2>
-      </div>
+  <img
+    src={logoWhite}
+    alt="Help Desk"
+    className="sidebar-logo"
+  />
+</div>
 
       <nav className="sidebar-nav">
         <NavLink

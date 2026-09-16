@@ -11,10 +11,11 @@ function MyTickets() {
   const [tickets, setTickets] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("ALL LEVELS");
-  const [selectedStatus, setSelectedStatus] = useState("OPEN TICKETS");
+  const [selectedStatus, setSelectedStatus] = useState("ALL");
 
   useEffect(() => {
-    api.get("/tickets")
+    api
+      .get("/tickets")
       .then((res) => {
         if (Array.isArray(res.data)) {
           setTickets(res.data);
@@ -22,7 +23,9 @@ function MyTickets() {
           setTickets(res.data.tickets);
         }
       })
-      .catch((err) => console.error("Failed to fetch tickets:", err));
+      .catch((err) => {
+        console.error("Failed to fetch tickets:", err);
+      });
   }, []);
 
   const myTickets = tickets.filter((ticket) => {
@@ -35,43 +38,56 @@ function MyTickets() {
   });
 
   const filteredTickets = myTickets.filter((ticket) => {
-    const ticketId = ticket._id || ticket.id || "";
-    const shortId = ticketId ? ticketId.slice(-6).toUpperCase() : "";
-    const subject = ticket.subject || ticket.title || "";
+    const title = ticket.title || "";
+    const search = searchTerm.toLowerCase().trim();
 
-    const matchesSearch =
-      shortId.includes(searchTerm.toUpperCase()) ||
-      subject.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = title.toLowerCase().includes(search);
 
-    const status = (ticket.status || "Open").toLowerCase();
+    const status =
+      typeof ticket.status === "object"
+        ? ticket.status?.name || ""
+        : ticket.status || "";
+
+    const normalizedStatus = status.toLowerCase();
 
     let matchesStatus = true;
 
-    if (selectedStatus === "OPEN TICKETS") {
-      matchesStatus = status === "open";
+    if (selectedStatus === "OPEN") {
+      matchesStatus = normalizedStatus === "open";
     } else if (selectedStatus === "IN PROGRESS") {
       matchesStatus =
-        status === "in progress" ||
-        status === "in-progress";
+        normalizedStatus === "in-progress" ||
+        normalizedStatus === "in progress";
     } else if (selectedStatus === "RESOLVED") {
-      matchesStatus =
-        status === "resolved" ||
-        status === "closed";
-    } else if (selectedStatus === "ALL") {
-      matchesStatus = true;
+      matchesStatus = normalizedStatus === "resolved";
     }
 
-    const priority = (ticket.priority || "").toLowerCase();
+    const priority =
+      typeof ticket.priority === "object"
+        ? ticket.priority?.name || ""
+        : ticket.priority || "";
 
     let matchesPriority = true;
 
     if (selectedPriority !== "ALL LEVELS") {
       matchesPriority =
-        priority === selectedPriority.toLowerCase();
+        priority.toLowerCase() === selectedPriority.toLowerCase();
     }
 
     return matchesSearch && matchesStatus && matchesPriority;
   });
+
+  const formatDate = (date) => {
+    if (!date) {
+      return "—";
+    }
+
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
 
   return (
     <div className="dashboard-fullscreen-layout">
@@ -79,20 +95,20 @@ function MyTickets() {
 
       <main className="main-content inbox-page-container">
         <div className="inbox-page-header">
-          <h2>MY TICKETS</h2>
+          <h2>My Tickets</h2>
 
           <p className="sub-header-text">
-            Manage and update your active support cases
+            View and track your IT support requests
           </p>
         </div>
 
         <div className="filter-pill-bar">
           <div className="pill-input">
-            <span className="pill-label">SEARCH</span>
+            <span className="pill-label">Search</span>
 
             <input
               type="text"
-              placeholder="Search by ID or Subject..."
+              placeholder="Search by ticket title..."
               className="pill-search-input"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -100,54 +116,35 @@ function MyTickets() {
           </div>
 
           <div className="pill-input">
-            <span className="pill-label">PRIORITY</span>
+            <span className="pill-label">Priority</span>
 
             <select
               className="pill-select-input"
               value={selectedPriority}
-              onChange={(e) =>
-                setSelectedPriority(e.target.value)
-              }
+              onChange={(e) => setSelectedPriority(e.target.value)}
             >
-              <option value="ALL LEVELS">ALL LEVELS</option>
-              <option value="Low">LOW</option>
-              <option value="Medium">MEDIUM</option>
-              <option value="High">HIGH</option>
-              <option value="Urgent">URGENT</option>
+              <option value="ALL LEVELS">All priorities</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Urgent!">Urgent</option>
             </select>
           </div>
 
           <div className="pill-input">
-            <span className="pill-label">STATUS</span>
+            <span className="pill-label">Status</span>
 
             <select
               className="pill-select-input"
               value={selectedStatus}
-              onChange={(e) =>
-                setSelectedStatus(e.target.value)
-              }
+              onChange={(e) => setSelectedStatus(e.target.value)}
             >
-              <option value="OPEN TICKETS">
-                OPEN TICKETS
-              </option>
-
-              <option value="IN PROGRESS">
-                IN PROGRESS
-              </option>
-
-              <option value="RESOLVED">
-                RESOLVED
-              </option>
-
-              <option value="ALL">
-                ALL STATUS
-              </option>
+              <option value="ALL">All statuses</option>
+              <option value="OPEN">Open</option>
+              <option value="IN PROGRESS">In progress</option>
+              <option value="RESOLVED">Resolved</option>
             </select>
           </div>
-
-          <button className="search-pill-btn">
-            FILTER
-          </button>
         </div>
 
         <div className="tickets-inbox-wrapper">
@@ -158,36 +155,28 @@ function MyTickets() {
           ) : (
             <div className="ticket-grid-container">
               {filteredTickets.map((ticket, index) => {
-                const ticketId =
-                  ticket._id || ticket.id || "";
+                const ticketId = ticket._id || ticket.id || "";
 
-                const shortId = ticketId
-                  ? ticketId.slice(-6).toUpperCase()
-                  : "000000";
+                const title = ticket.title || "Untitled ticket";
 
-                const subject =
-                  ticket.subject ||
-                  ticket.title ||
-                  "No Subject";
+                const category =
+                  typeof ticket.category === "object"
+                    ? ticket.category?.name || "—"
+                    : ticket.category || "—";
+
+                const priority =
+                  typeof ticket.priority === "object"
+                    ? ticket.priority?.name || "—"
+                    : ticket.priority || "—";
 
                 const status =
-                  ticket.status || "Open";
+                  typeof ticket.status === "object"
+                    ? ticket.status?.name || "—"
+                    : ticket.status || "—";
 
-                const creator =
-                  ticket.createdBy?.name ||
-                  ticket.user?.name ||
-                  "Test Employee";
-
-                const assignedTo =
-                  ticket.assignedTo?.name ||
-                  "Unassigned";
-
-                const department =
-                  ticket.department ||
-                  "Support";
-
-                const messageCount =
-                  ticket.messages?.length || 1;
+                const statusClass = status
+                  .toLowerCase()
+                  .replace(/\s+/g, "-");
 
                 return (
                   <div
@@ -195,49 +184,56 @@ function MyTickets() {
                     key={ticketId || index}
                   >
                     <div className="ticket-card-top">
-                      <div className="ticket-card-user-info">
-                        <div className="ticket-card-avatar">
-                          👤
-                        </div>
-
-                        <span className="ticket-card-id">
-                          #{shortId}
-                        </span>
-
-                        <span className="ticket-card-count">
-                          ({messageCount})
-                        </span>
-
-                        <span className="ticket-card-dot"></span>
-                      </div>
-
-                      <span className="ticket-card-status-dot"></span>
+                      <span
+                        className={`ticket-status-badge status-${statusClass}`}
+                      >
+                        {status}
+                      </span>
                     </div>
 
                     <div className="ticket-card-subj">
-                      SUBJ: {subject}
+                      {title}
                     </div>
 
                     <div className="ticket-card-details">
                       <div>
                         <span className="detail-lbl">
-                          REQUESTER:
-                        </span>{" "}
-                        REQ: {creator}
+                          Category
+                        </span>
+
+                        <span className="detail-value">
+                          {category}
+                        </span>
                       </div>
 
                       <div>
                         <span className="detail-lbl">
-                          ASSIGNED TO:
-                        </span>{" "}
-                        {assignedTo}
+                          Priority
+                        </span>
+
+                        <span className="detail-value">
+                          {priority}
+                        </span>
                       </div>
 
                       <div>
                         <span className="detail-lbl">
-                          DEPARTMENT:
-                        </span>{" "}
-                        {department}
+                          Status
+                        </span>
+
+                        <span className="detail-value">
+                          {status}
+                        </span>
+                      </div>
+
+                      <div>
+                        <span className="detail-lbl">
+                          Created
+                        </span>
+
+                        <span className="detail-value">
+                          {formatDate(ticket.createdAt)}
+                        </span>
                       </div>
                     </div>
 
@@ -246,7 +242,7 @@ function MyTickets() {
                         to={`/tickets/${ticketId}`}
                         className="view-details-btn"
                       >
-                        VIEW DETAILS
+                        View details
                       </Link>
                     </div>
                   </div>
