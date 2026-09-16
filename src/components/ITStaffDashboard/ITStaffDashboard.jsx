@@ -16,7 +16,7 @@ function ITStaffDashboard() {
   }, []);
 
   const open = tickets.filter((t) => t.status === 'Open').length;
-  const inProgress = tickets.filter((t) => t.status === 'In Progress').length;
+const inProgress = tickets.filter((t) => t.status === 'In-Progress').length;
   const resolved = tickets.filter((t) => t.status === 'Resolved').length;
 
   const filteredTickets =
@@ -26,10 +26,14 @@ function ITStaffDashboard() {
 
   const isAllTicketsPage = location.pathname === '/all-tickets';
 
-  const displayedTickets = isAllTicketsPage
-    ? filteredTickets
-    : filteredTickets.slice(0, 4);
-
+ const displayedTickets = isAllTicketsPage
+  ? filteredTickets
+  : [...filteredTickets]
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt) - new Date(a.createdAt)
+      )
+      .slice(0, 6);
   return (
     <div className="it-dashboard-layout">
       <Sidebar />
@@ -38,10 +42,10 @@ function ITStaffDashboard() {
         <header className="it-dashboard-header">
           <div>
             <h1>
-              {isAllTicketsPage
-                ? 'ALL TICKETS'
-                : 'IT STAFF DASHBOARD'}
-            </h1>
+  {isAllTicketsPage
+    ? 'All Tickets'
+    : 'IT Staff Dashboard'}
+</h1>
 
             <p>
               {isAllTicketsPage
@@ -50,23 +54,6 @@ function ITStaffDashboard() {
             </p>
           </div>
 
-          {!isAllTicketsPage && (
-            <div className="quick-action-buttons">
-              <Link
-                to="/tickets/new"
-                className="quick-action-button primary"
-              >
-                NEW TICKET
-              </Link>
-
-              <Link
-                to="/categories"
-                className="quick-action-button"
-              >
-                MANAGE CATEGORIES
-              </Link>
-            </div>
-          )}
         </header>
 
         {!isAllTicketsPage && (
@@ -90,7 +77,7 @@ function ITStaffDashboard() {
             >
               <option value="All">All</option>
               <option value="Open">Open</option>
-              <option value="In Progress">In Progress</option>
+              <option value="In-Progress">In Progress</option>
               <option value="Resolved">Resolved</option>
             </select>
           </div>
