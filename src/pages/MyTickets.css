@@ -1,0 +1,181 @@
+.dashboard-fullscreen-layout {
+  min-height: 100vh;
+  background: #f4f7fb;
+}
+
+/* =========================
+   MAIN CONTENT
+   ========================= */
+
+.main-content {
+  margin-left: 240px;
+  min-height: 100vh;
+}
+
+.inbox-page-container {
+  background-color: #f4f7fb;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* =========================
+   PAGE HEADER
+   ========================= */
+
+.inbox-page-header {
+  margin-bottom: 24px;
+}
+
+.inbox-page-header h2 {
+  margin: 0;
+  color: #002244;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+
+.sub-header-text {
+  margin: 7px 0 0;
+  color: #7b8e9f;
+  font-size: 14px;
+}
+
+/* =========================
+   FILTER BAR
+   ========================= */
+
+.filter-pill-bar {
+  background-color: #ffffff;
+  padding: 16px 20px;
+  border: 1px solid #e3ebf2;
+  border-radius: 14px;
+
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 120px;
+  gap: 18px;
+  align-items: center;
+
+  margin-bottom: 20px;
+
+  box-shadow: 0 4px 15px rgba(0, 34, 68, 0.04);
+}
+
+.pill-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pill-label {
+  color: #7b8e9f;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+}
+
+.pill-value {
+  color: #0084c7;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pill-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #002244;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  padding: 0;
+}
+
+.pill-search-input::placeholder {
+  color: #9aa9b7;
+  font-weight: 500;
+}
+
+.search-pill-btn {
+  border: none;
+  border-radius: 9px;
+
+  padding: 11px 14px;
+
+  background-color: #facc14;
+  color: #002244;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.search-pill-btn:hover {
+  background-color: #f8c400;
+}
+
+/* =========================
+   TICKET INBOX
+   ========================= */
+
+.tickets-inbox-wrapper {
+  flex: 1;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e3ebf2;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 15px rgba(0, 34, 68, 0.04);
+
+  overflow: hidden;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 1100px) {
+  .filter-pill-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    margin-left: 210px;
+  }
+
+  .inbox-page-container {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 700px) {
+  .main-content {
+    margin-left: 0;
+  }
+
+  .inbox-page-container {
+    padding: 20px;
+  }
+
+  .filter-pill-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .inbox-page-header h2 {
+    font-size: 24px;
+  }
+}

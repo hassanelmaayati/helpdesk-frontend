@@ -1,0 +1,130 @@
+.inbox-container {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+/* Toolbar Styling */
+.inbox-toolbar {
+  background-color: #f8fafc;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-select {
+  margin-left: 0.75rem;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Ticket List Container */
+.inbox-ticket-list {
+  background-color: #ffffff;
+}
+
+.inbox-ticket-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.15s ease;
+}
+
+.inbox-ticket-card:hover {
+  background-color: #f8fafc;
+}
+
+.card-left-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ticket-checkbox {
+  cursor: pointer;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #0084c7;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.ticket-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ticket-title-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.ticket-ref-id {
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.ticket-subject {
+  color: #0084c7;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.ticket-meta {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.meta-bold {
+  color: #334155;
+  font-weight: 600;
+}
+
+.meta-highlight {
+  color: #0284c7;
+  font-weight: 600;
+}
+
+/* Status Badges Right */
+.status-badge {
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.status-badge.due-today {
+  background-color: #facc14;
+  color: #002244;
+}
+
+.status-badge.overdue {
+  background-color: #ef4444;
+}
+
+.empty-state-text {
+  padding: 1.5rem;
+  text-align: center;
+  color: #94a3b8;
+  margin: 0;
+}
