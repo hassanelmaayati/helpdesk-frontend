@@ -32,6 +32,11 @@ function TicketList({ tickets = [] }) {
             const status =
               ticket.status || 'Open';
 
+            const displayStatus =
+              status === 'In-Progress'
+                ? 'In Progress'
+                : status;
+
             return (
               <Link
                 to={`/tickets/${ticketId}`}
@@ -62,9 +67,10 @@ function TicketList({ tickets = [] }) {
                   <span
                     className={`status-badge ${status
                       .toLowerCase()
-                      .replace(/\s+/g, '-')}`}
+                      .replace(/\s+/g, '-')
+                      .replace(/-+/g, '-')}`}
                   >
-                    {status}
+                    {displayStatus}
                   </span>
                 </div>
               </Link>

@@ -1,130 +1,61 @@
-/* Override the global section padding inside the employee dashboard */
-.employee-dashboard-content section {
-  padding: 0;
-}
-
 .employee-dashboard-layout {
   display: flex;
   min-height: 100vh;
   background: #f8fafc;
 }
 
-.employee-sidebar {
-  width: 240px;
-  background: #1e293b;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding-top: 24px;
-  z-index: 10;
-}
-
-.sidebar-nav-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 16px 24px;
-  color: #94a3b8;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  transition: color 0.2s ease;
-}
-
-.sidebar-nav-item:hover {
-  color: #ffffff;
-}
-
-.sidebar-nav-item.active {
-  background: #f8fafc;
-  color: #0f172a;
-  border-top-left-radius: 24px;
-  border-bottom-left-radius: 24px;
-  margin-right: -1px;
-}
-
-.sidebar-nav-item.active::before {
-  content: "";
-  position: absolute;
-  top: -20px;
-  right: 0;
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  border-bottom-right-radius: 20px;
-  box-shadow: 4px 4px 0 4px #f8fafc;
-  pointer-events: none;
-}
-
-.sidebar-nav-item.active::after {
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  right: 0;
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  border-top-right-radius: 20px;
-  box-shadow: 4px -4px 0 4px #f8fafc;
-  pointer-events: none;
-}
-
 .employee-dashboard-content {
   flex: 1;
-  padding: 30px 40px;
+  padding: 40px;
   margin-left: 240px;
 }
 
 .employee-dashboard-header {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
 }
 
 .employee-dashboard-header h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
   color: #0f172a;
   letter-spacing: 0.5px;
 }
 
 .employee-dashboard-header p {
-  margin: 4px 0 0;
+  margin: 6px 0 0;
   color: #64748b;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .employee-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  width: 100%;
 }
 
 .employee-stat-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
-  padding: 16px 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  padding: 20px 24px;
 }
 
 .employee-stat-card:nth-child(1) {
   border-top: 4px solid #009ef7;
-  background: linear-gradient(to bottom, rgba(0, 158, 247, 0.03), #ffffff 40px);
 }
 
 .employee-stat-card:nth-child(2) {
   border-top: 4px solid #f59e0b;
-  background: linear-gradient(to bottom, rgba(245, 158, 11, 0.03), #ffffff 40px);
 }
 
 .employee-stat-card:nth-child(3) {
   border-top: 4px solid #10b981;
-  background: linear-gradient(to bottom, rgba(16, 185, 129, 0.03), #ffffff 40px);
 }
 
 .stat-label {
@@ -149,27 +80,27 @@
 }
 
 .employee-dashboard-section {
+  width: 100%;
+  padding: 0;
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  margin-bottom: 0;
+  border-radius: 10px;
+  margin-bottom: 28px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .section-header-inbox {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
+  padding: 20px 24px;
   border-bottom: 1px solid #e2e8f0;
-  background: #fafafa;
 }
 
-.inbox-title-area h2 {
+.section-header-inbox h2 {
   margin: 0;
   color: #0f172a;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
 }
 
@@ -184,113 +115,102 @@
   text-decoration: underline;
 }
 
+.quick-action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 0;
+}
+
+.quick-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  color: #334155;
+  background: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.quick-action-button:hover {
+  background: #f8fafc;
+}
+
+.quick-action-button.primary {
+  border-color: #009ef7;
+  background: #009ef7;
+  color: #ffffff;
+}
+
+.quick-action-button.primary:hover {
+  background: #0082c8;
+}
+
 .ticket-list-container {
   display: flex;
   flex-direction: column;
   background: #ffffff;
 }
 
-.ticket-inbox-row {
+.employee-ticket-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
+  padding: 16px 24px;
   text-decoration: none;
   background: #ffffff;
   border-bottom: 1px solid #f1f5f9;
-  position: relative;
-  border-left: 4px solid #009ef7;
   transition: background-color 0.2s ease;
 }
 
-.ticket-inbox-row:hover {
+.employee-ticket-card:hover {
   background-color: #f8fafc;
 }
 
-.ticket-inbox-left {
+.employee-ticket-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   flex: 1;
 }
 
-.ticket-inbox-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
-.ticket-inbox-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.ticket-inbox-title-line {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-}
-
-.ticket-id-tag {
+.employee-ticket-id {
   color: #0f172a;
   font-weight: 700;
   background: #f1f5f9;
-  padding: 2px 6px;
+  padding: 4px 7px;
   border-radius: 4px;
   font-size: 11px;
+  flex-shrink: 0;
 }
 
-.ticket-title-text {
-  color: #009ef7;
-  font-weight: 600;
-}
-
-.ticket-badge-count {
-  background-color: #e0f2fe;
-  color: #0369a1;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 1px 6px;
-  border-radius: 10px;
-}
-
-.unread-dot {
-  width: 6px;
-  height: 6px;
-  background-color: #009ef7;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.ticket-inbox-meta-line {
-  font-size: 12px;
-  color: #64748b;
+.employee-ticket-details {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 6px;
 }
 
-.meta-label {
-  color: #64748b;
+.employee-ticket-title {
+  color: #009ef7;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.meta-val {
+.employee-ticket-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.employee-ticket-meta strong {
   color: #334155;
   font-weight: 500;
-}
-
-.meta-val.unassigned {
-  color: #94a3b8;
-  font-style: italic;
 }
 
 .meta-separator {
@@ -298,12 +218,9 @@
   font-size: 10px;
 }
 
-.ticket-inbox-right {
+.employee-ticket-status {
   flex-shrink: 0;
-  margin-left: 12px;
-}
-
-.ticket-inbox-status-tag {
+  margin-left: 16px;
   font-size: 11px;
   font-weight: 700;
   padding: 5px 10px;
@@ -312,23 +229,21 @@
   letter-spacing: 0.3px;
 }
 
-.ticket-inbox-status-tag.open {
-  background: #fef9c3;
-  color: #854d0e;
-  border: 1px solid #fde047;
-}
-
-.ticket-inbox-status-tag.in-progress, 
-.ticket-inbox-status-tag.in_progress {
+.employee-ticket-status.open {
   background: #dbeafe;
-  color: #1e40af;
+  color: #2563eb;
   border: 1px solid #bfdbfe;
 }
 
-.ticket-inbox-status-tag.resolved, 
-.ticket-inbox-status-tag.closed {
+.employee-ticket-status.in-progress {
+  background: #fef3c7;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.employee-ticket-status.resolved {
   background: #dcfce7;
-  color: #166534;
+  color: #16a34a;
   border: 1px solid #bbf7d0;
 }
 
@@ -346,7 +261,44 @@
     padding: 20px;
   }
 
+  .employee-dashboard-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
   .employee-stats {
     grid-template-columns: 1fr;
+  }
+
+  .quick-action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .quick-action-button {
+    width: 100%;
+  }
+
+  .employee-ticket-card {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .employee-ticket-left {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .employee-ticket-card {
+    flex-direction: column;
+  }
+
+  .employee-ticket-status {
+    margin-left: 0;
+  }
+
+  .employee-ticket-meta {
+    flex-wrap: wrap;
   }
 }
