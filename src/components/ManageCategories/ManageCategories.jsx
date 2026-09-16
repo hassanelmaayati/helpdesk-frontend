@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react'
-import { indexCategory, createCategory, updateCategory, deleteCategory } from '../../services/categoryService'
+import {
+  indexCategory,
+  createCategory,
+  updateCategory,
+  deleteCategory
+} from '../../services/categoryService'
 import Sidebar from '../Sidebar/Sidebar'
 import './ManageCategories.css'
 
@@ -13,7 +18,10 @@ function ManageCategories() {
 
     createCategory(name, localStorage.getItem('token'))
       .then((data) => {
-        setCategories((currentCategories) => [...currentCategories, data])
+        setCategories((currentCategories) => [
+          ...currentCategories,
+          data
+        ])
       })
 
     setName('')
@@ -23,7 +31,9 @@ function ManageCategories() {
     deleteCategory(id, localStorage.getItem('token'))
       .then(() => {
         setCategories((currentCategories) =>
-          currentCategories.filter((category) => category._id !== id)
+          currentCategories.filter(
+            (category) => category._id !== id
+          )
         )
       })
   }
@@ -36,6 +46,7 @@ function ManageCategories() {
             category._id === id ? data : category
           )
         )
+
         setName('')
         setEditId(null)
       })
@@ -54,44 +65,59 @@ function ManageCategories() {
 
       <main className="category-page">
         <header className="category-page-header">
-          <h2>MANAGE CATEGORIES</h2>
+          <h2>Manage Categories</h2>
           <p>Create and manage support ticket categories</p>
         </header>
 
         <div className="category-container">
-          <form onSubmit={handleSubmit} className="category-form">
+          <form
+            onSubmit={handleSubmit}
+            className="category-form"
+          >
             <div className="category-form-field">
-              <label htmlFor="category-name">CATEGORY NAME</label>
+              <label htmlFor="category-name">
+                Category Name
+              </label>
 
               <input
                 id="category-name"
                 type="text"
                 placeholder="Enter category name"
                 value={name}
-                onChange={(event) => setName(event.target.value)}
+                onChange={(event) =>
+                  setName(event.target.value)
+                }
                 required
               />
             </div>
 
             <div className="category-form-actions">
-              <button type="submit" className="category-add-button">
-                ADD CATEGORY
+              <button
+                type="submit"
+                className="category-add-button"
+              >
+                Add Category
               </button>
             </div>
           </form>
 
           <div className="category-list">
             <div className="category-list-header">
-              <h3>EXISTING CATEGORIES</h3>
+              <h3>Existing Categories</h3>
             </div>
 
             {categories.map((category) => (
-              <div className="category-item" key={category._id}>
+              <div
+                className="category-item"
+                key={category._id}
+              >
                 {editId === category._id ? (
                   <input
                     className="category-edit-input"
                     value={name}
-                    onChange={(event) => setName(event.target.value)}
+                    onChange={(event) =>
+                      setName(event.target.value)
+                    }
                   />
                 ) : (
                   <span className="category-name">
@@ -103,9 +129,11 @@ function ManageCategories() {
                   {editId === category._id ? (
                     <button
                       className="category-save-button"
-                      onClick={() => handleUpdate(category._id)}
+                      onClick={() =>
+                        handleUpdate(category._id)
+                      }
                     >
-                      SAVE
+                      Save
                     </button>
                   ) : (
                     <button
@@ -115,15 +143,17 @@ function ManageCategories() {
                         setName(category.name)
                       }}
                     >
-                      EDIT
+                      Edit
                     </button>
                   )}
 
                   <button
                     className="category-delete-button"
-                    onClick={() => handleDelete(category._id)}
+                    onClick={() =>
+                      handleDelete(category._id)
+                    }
                   >
-                    DELETE
+                    Delete
                   </button>
                 </div>
               </div>
