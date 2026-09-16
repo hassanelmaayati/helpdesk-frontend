@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
@@ -7,6 +8,7 @@ import {
 } from '../services/ticketService';
 import { useAuth } from '../context/useAuth';
 import CommentList from '../components/CommentList/CommentList';
+import CommentForm from '../components/CommentForm/CommentForm';
 import Sidebar from '../components/Sidebar/Sidebar';
 import './TicketDetail.css';
 
@@ -14,20 +16,31 @@ function TicketDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user, token } = useAuth();
+
   const [ticket, setTicket] = useState(null);
   const [status, setStatus] = useState('');
+  const [editingComment, setEditingComment] = useState(null);
+  const [commentsRefresh, setCommentsRefresh] = useState(0);
 
   useEffect(() => {
-    getTicket(id).then((res) => {
-      setTicket(res.data);
-      setStatus(res.data.status);
-    });
+    getTicket(id)
+      .then((res) => {
+        setTicket(res.data);
+        setStatus(res.data.status);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch ticket:', err);
+      });
   }, [id]);
 
   const handleDelete = async () => {
     if (window.confirm('Delete this ticket?')) {
-      await deleteTicket(id);
-      navigate('/employee-dashboard');
+      try {
+        await deleteTicket(id);
+        navigate('/employee-dashboard');
+      } catch (err) {
+        console.error('Failed to delete ticket:', err);
+      }
     }
   };
 
@@ -40,10 +53,51 @@ function TicketDetail() {
     }
   };
 
-  if (!ticket) return <div className="ticket-detail-loading">Loading...</div>;
+  const handleCommentAdded = () => {
+    setCommentsRefresh((previous) => previous + 1);
+  };
 
-  const isOwner = ticket.createdBy._id === user._id;
+  const handleCommentUpdated = () => {
+    setEditingComment(null);
+    setCommentsRefresh((previous) => previous + 1);
+  };
+
+  if (!ticket) {
+    return (
+      <div className="ticket-detail-loading">
+        Loading...
+      </div>
+    );
+  }
+
+  const createdById =
+    ticket.createdBy?._id ||
+    ticket.createdBy?.id ||
+    ticket.createdBy;
+
+  const userId = user?._id || user?.id;
+
+  const isOwner = createdById === userId;
   const isITStaff = user?.role === 'it-staff';
+
+  const category =
+    typeof ticket.category === 'object'
+      ? ticket.category?.name || '—'
+      : ticket.category || '—';
+
+  const priority =
+    typeof ticket.priority === 'object'
+      ? ticket.priority?.name || '—'
+      : ticket.priority || '—';
+
+  const ticketStatus =
+    typeof ticket.status === 'object'
+      ? ticket.status?.name || '—'
+      : ticket.status || '—';
+
+  const statusClass = ticketStatus
+    .toLowerCase()
+    .replace(/\s+/g, '-');
 
   return (
     <div className="ticket-detail-layout">
@@ -51,112 +105,138 @@ function TicketDetail() {
 
       <main className="ticket-detail-page">
         <header className="ticket-detail-header">
-          <h2>TICKET DETAILS</h2>
+          <h2>Ticket Details</h2>
           <p>View and manage your support ticket</p>
         </header>
 
         <div className="ticket-detail-container">
           <div className="ticket-detail-top">
             <div>
-              <span className="ticket-detail-id">
-                #{ticket.ticketId || id}
-              </span>
-
               <h1>{ticket.title}</h1>
             </div>
 
             <span
-              className={`ticket-detail-status ${ticket.status
-                .toLowerCase()
-                .replace(' ', '-')}`}
+              className={`ticket-detail-status status-${statusClass}`}
             >
-              {ticket.status}
+              {ticketStatus}
             </span>
           </div>
 
           <div className="ticket-detail-info">
             <div className="ticket-info-item">
-              <span className="ticket-info-label">CATEGORY</span>
+              <span className="ticket-info-label">
+                Category
+              </span>
               <span className="ticket-info-value">
-                {ticket.category.name}
+                {category}
               </span>
             </div>
 
             <div className="ticket-info-item">
-              <span className="ticket-info-label">PRIORITY</span>
+              <span className="ticket-info-label">
+                Priority
+              </span>
               <span className="ticket-info-value">
-                {ticket.priority}
+                {priority}
               </span>
             </div>
 
             <div className="ticket-info-item">
-              <span className="ticket-info-label">STATUS</span>
+              <span className="ticket-info-label">
+                Status
+              </span>
               <span className="ticket-info-value">
-                {ticket.status}
+                {ticketStatus}
               </span>
             </div>
 
             <div className="ticket-info-item">
-              <span className="ticket-info-label">CONTACT</span>
+              <span className="ticket-info-label">
+                Contact
+              </span>
               <span className="ticket-info-value">
-                {ticket.contactInfo}
+                {ticket.contactInfo || '—'}
               </span>
             </div>
           </div>
 
           <div className="ticket-detail-section">
-            <h3>DESCRIPTION</h3>
+            <h3>Description</h3>
             <p>{ticket.description}</p>
           </div>
 
-          <div className="ticket-detail-actions">
-            {isITStaff && (
-              <>
-                <select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="ticket-detail-status"
-                >
-                  <option value="Open">Open</option>
-                  <option value="In-Progress">In-Progress</option>
-                  <option value="Resolved">Resolved</option>
-                </select>
+          {(isITStaff || isOwner) && (
+            <div className="ticket-detail-actions">
+              {isITStaff && (
+                <>
+                  <select
+                    value={status}
+                    onChange={(e) =>
+                      setStatus(e.target.value)
+                    }
+                    className="ticket-status-select"
+                  >
+                    <option value="Open">Open</option>
+                    <option value="In-Progress">
+                      In progress
+                    </option>
+                    <option value="Resolved">
+                      Resolved
+                    </option>
+                  </select>
 
-                <button
-                  onClick={handleStatusUpdate}
-                  className="ticket-edit-button"
-                >
-                  UPDATE STATUS
-                </button>
-              </>
-            )}
+                  <button
+                    onClick={handleStatusUpdate}
+                    className="ticket-update-button"
+                  >
+                    Update status
+                  </button>
+                </>
+              )}
 
-            {isOwner && (
-              <>
-                <Link
-                  to={`/tickets/${id}/edit`}
-                  className="ticket-edit-button"
-                >
-                  EDIT TICKET
-                </Link>
+              {isOwner && (
+                <>
+                  <Link
+                    to={`/tickets/${id}/edit`}
+                    className="ticket-edit-button"
+                  >
+                    Edit ticket
+                  </Link>
 
-                <button
-                  onClick={handleDelete}
-                  className="ticket-delete-button"
-                >
-                  DELETE TICKET
-                </button>
-              </>
-            )}
-          </div>
+                  <button
+                    onClick={handleDelete}
+                    className="ticket-delete-button"
+                  >
+                    Delete ticket
+                  </button>
+                </>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="ticket-comments-container">
           <div className="ticket-comments-header">
-            <h3>COMMENTS</h3>
+            <h3>Comments</h3>
           </div>
 
-          <CommentList ticketId={id} token={token} />
+          {/* The only comment form */}
+          <CommentForm
+            ticketId={id}
+            token={token}
+            editingComment={editingComment}
+            onCommentAdded={handleCommentAdded}
+            onCommentUpdated={handleCommentUpdated}
+            onCancelEdit={() => setEditingComment(null)}
+          />
+
+          {/* Comments list */}
+          <CommentList
+            ticketId={id}
+            token={token}
+            refresh={commentsRefresh}
+            onEdit={setEditingComment}
+          />
         </div>
       </main>
     </div>
