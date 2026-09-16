@@ -2,7 +2,14 @@ import { useEffect, useState } from 'react';
 import { createComment, updateComment } from '../../services/commentService';
 import './CommentForm.css';
 
-function CommentForm({ ticketId, token, editingComment, onCommentUpdated, onCancelEdit }) {
+function CommentForm({
+  ticketId,
+  token,
+  editingComment,
+  onCommentAdded,
+  onCommentUpdated,
+  onCancelEdit
+}) {
   const [content, setContent] = useState('');
   const [message, setMessage] = useState('');
 
@@ -19,6 +26,11 @@ function CommentForm({ ticketId, token, editingComment, onCommentUpdated, onCanc
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (!content.trim()) {
+      setMessage('Please write a comment.');
+      return;
+    }
+
     try {
       if (editingComment) {
         await updateComment(
@@ -28,6 +40,7 @@ function CommentForm({ ticketId, token, editingComment, onCommentUpdated, onCanc
           token
         );
 
+        setContent('');
         setMessage('Comment updated successfully!');
         onCommentUpdated();
       } else {
@@ -35,6 +48,7 @@ function CommentForm({ ticketId, token, editingComment, onCommentUpdated, onCanc
 
         setContent('');
         setMessage('Comment added successfully!');
+        onCommentAdded();
       }
     } catch (error) {
       setMessage(error.message);
@@ -43,7 +57,9 @@ function CommentForm({ ticketId, token, editingComment, onCommentUpdated, onCanc
 
   return (
     <form onSubmit={handleSubmit} className="comment-form">
-      <h2>{editingComment ? 'EDIT COMMENT' : 'ADD A COMMENT'}</h2>
+      <h2>
+        {editingComment ? 'Edit comment' : 'Add a comment'}
+      </h2>
 
       <textarea
         value={content}
@@ -53,8 +69,11 @@ function CommentForm({ ticketId, token, editingComment, onCommentUpdated, onCanc
       />
 
       <div className="comment-form-actions">
-        <button type="submit" className="comment-submit-button">
-          {editingComment ? 'UPDATE COMMENT' : 'ADD COMMENT'}
+        <button
+          type="submit"
+          className="comment-submit-button"
+        >
+          {editingComment ? 'Update comment' : 'Add comment'}
         </button>
 
         {editingComment && (
@@ -63,12 +82,16 @@ function CommentForm({ ticketId, token, editingComment, onCommentUpdated, onCanc
             onClick={onCancelEdit}
             className="comment-cancel-button"
           >
-            CANCEL
+            Cancel
           </button>
         )}
       </div>
 
-      {message && <p className="comment-form-message">{message}</p>}
+      {message && (
+        <p className="comment-form-message">
+          {message}
+        </p>
+      )}
     </form>
   );
 }

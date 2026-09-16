@@ -1,67 +1,79 @@
+
 .comment-form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .comment-form h2 {
   margin: 0;
-  color: #002244;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
+  color: #334155;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 .comment-textarea {
   width: 100%;
-  min-height: 110px;
-  padding: 12px 14px;
-  border: 1px solid #dce5ed;
-  border-radius: 8px;
+  min-height: 150px;
+  box-sizing: border-box;
+  padding: 15px 17px;
+  border: 1px solid #d6e0e8;
+  border-radius: 9px;
   background: #ffffff;
-  color: #002244;
+  color: #0f172a;
   font-family: inherit;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
   resize: vertical;
   outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .comment-textarea::placeholder {
-  color: #9aa9b7;
+  color: #94a3b8;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .comment-textarea:focus {
   border-color: #0084c7;
-  box-shadow: 0 0 0 3px rgba(0, 132, 199, 0.08);
+  box-shadow: 0 0 0 3px rgba(0, 132, 199, 0.1);
 }
 
 .comment-form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
 }
 
 .comment-submit-button,
 .comment-cancel-button {
-  min-height: 40px;
-  padding: 0 18px;
-  border-radius: 7px;
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 8px;
   font-family: inherit;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.3px;
+  font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .comment-submit-button {
-  border: 1px solid #facc14;
-  background: #facc14;
-  color: #002244;
+  border: 1px solid #0f172a;
+  background: #0f172a;
+  color: #ffffff;
 }
 
 .comment-submit-button:hover {
-  background: #f8c400;
+  background: #1e293b;
+  border-color: #1e293b;
 }
 
 .comment-cancel-button {
@@ -72,21 +84,42 @@
 
 .comment-cancel-button:hover {
   background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.comment-submit-button:active,
+.comment-cancel-button:active {
+  transform: translateY(1px);
+}
+
+.comment-submit-button:disabled,
+.comment-cancel-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .comment-form-message {
   margin: 0;
   color: #64748b;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 @media (max-width: 700px) {
   .comment-form-actions {
-    flex-direction: column;
+    flex-direction: column-reverse;
+    align-items: stretch;
   }
 
   .comment-submit-button,
   .comment-cancel-button {
     width: 100%;
+  }
+
+  .comment-textarea {
+    min-height: 130px;
+    font-size: 16px;
   }
 }

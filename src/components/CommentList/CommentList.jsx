@@ -1,17 +1,25 @@
+
 import { useEffect, useState } from 'react';
-import { getComments, deleteComment } from '../../services/commentService';
-import CommentForm from '../CommentForm/CommentForm';
+import {
+  getComments,
+  deleteComment
+} from '../../services/commentService';
 import './CommentList.css';
 
-function CommentList({ ticketId, token }) {
+function CommentList({
+  ticketId,
+  token,
+  refresh,
+  onEdit
+}) {
   const [comments, setComments] = useState([]);
   const [message, setMessage] = useState('');
-  const [editingComment, setEditingComment] = useState(null);
 
   const loadComments = async () => {
     try {
       const data = await getComments(ticketId, token);
       setComments(data);
+      setMessage('');
     } catch (error) {
       setMessage(error.message);
     }
@@ -19,14 +27,15 @@ function CommentList({ ticketId, token }) {
 
   useEffect(() => {
     loadComments();
-  }, [ticketId, token]);
-
-  const handleCommentUpdated = async () => {
-    setEditingComment(null);
-    await loadComments();
-  };
+  }, [ticketId, token, refresh]);
 
   const handleDelete = async (commentId) => {
+    const confirmed = window.confirm(
+      'Delete this comment?'
+    );
+
+    if (!confirmed) return;
+
     try {
       await deleteComment(ticketId, commentId, token);
       await loadComments();
@@ -38,18 +47,23 @@ function CommentList({ ticketId, token }) {
 
   return (
     <section className="comment-section">
-      <div className="comment-section-header">
-        <h2>COMMENTS</h2>
-      </div>
-
       <div className="comment-list">
-        {message && <p className="comment-message">{message}</p>}
+        {message && (
+          <p className="comment-message">
+            {message}
+          </p>
+        )}
 
         {comments.length === 0 ? (
-          <p className="no-comments">No comments yet.</p>
+          <p className="no-comments">
+            No comments yet.
+          </p>
         ) : (
           comments.map((comment) => (
-            <article className="comment-card" key={comment._id}>
+            <article
+              className="comment-card"
+              key={comment._id}
+            >
               <div className="comment-content">
                 <p>{comment.content}</p>
 
@@ -62,7 +76,7 @@ function CommentList({ ticketId, token }) {
                 <button
                   type="button"
                   className="comment-edit-button"
-                  onClick={() => setEditingComment(comment)}
+                  onClick={() => onEdit(comment)}
                 >
                   EDIT
                 </button>
@@ -78,16 +92,6 @@ function CommentList({ ticketId, token }) {
             </article>
           ))
         )}
-      </div>
-
-      <div className="comment-form-container">
-        <CommentForm
-          ticketId={ticketId}
-          token={token}
-          editingComment={editingComment}
-          onCommentUpdated={handleCommentUpdated}
-          onCancelEdit={() => setEditingComment(null)}
-        />
       </div>
     </section>
   );
