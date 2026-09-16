@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
@@ -15,10 +14,11 @@ import './TicketDetail.css';
 function TicketDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user, token } = useAuth();
+  const { user } = useAuth();
 
   const [ticket, setTicket] = useState(null);
   const [status, setStatus] = useState('');
+  const [error, setError] = useState('');
   const [editingComment, setEditingComment] = useState(null);
   const [commentsRefresh, setCommentsRefresh] = useState(0);
 
@@ -29,7 +29,7 @@ function TicketDetail() {
         setStatus(res.data.status);
       })
       .catch((err) => {
-        console.error('Failed to fetch ticket:', err);
+        setError(err.message);
       });
   }, [id]);
 
@@ -39,7 +39,7 @@ function TicketDetail() {
         await deleteTicket(id);
         navigate('/employee-dashboard');
       } catch (err) {
-        console.error('Failed to delete ticket:', err);
+        setError(err.message);
       }
     }
   };
@@ -48,8 +48,9 @@ function TicketDetail() {
     try {
       const res = await updateTicketStatus(id, status);
       setTicket(res.data);
+      setError('');
     } catch (err) {
-      console.error('Failed to update ticket status:', err);
+      setError(err.message);
     }
   };
 
@@ -65,7 +66,7 @@ function TicketDetail() {
   if (!ticket) {
     return (
       <div className="ticket-detail-loading">
-        Loading...
+        {error || 'Loading...'}
       </div>
     );
   }
@@ -213,6 +214,12 @@ function TicketDetail() {
               )}
             </div>
           )}
+
+          {error && (
+            <p className="ticket-detail-error">
+              {error}
+            </p>
+          )}
         </div>
 
         <div className="ticket-comments-container">
@@ -220,20 +227,17 @@ function TicketDetail() {
             <h3>Comments</h3>
           </div>
 
-          {/* The only comment form */}
           <CommentForm
+            key={editingComment?._id || 'new-comment'}
             ticketId={id}
-            token={token}
             editingComment={editingComment}
             onCommentAdded={handleCommentAdded}
             onCommentUpdated={handleCommentUpdated}
             onCancelEdit={() => setEditingComment(null)}
           />
 
-          {/* Comments list */}
           <CommentList
             ticketId={id}
-            token={token}
             refresh={commentsRefresh}
             onEdit={setEditingComment}
           />

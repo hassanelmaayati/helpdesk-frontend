@@ -1,27 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { createComment, updateComment } from '../../services/commentService';
 import './CommentForm.css';
 
 function CommentForm({
   ticketId,
-  token,
   editingComment,
   onCommentAdded,
   onCommentUpdated,
   onCancelEdit
 }) {
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState(
+    editingComment?.content || ''
+  );
   const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    if (editingComment) {
-      setContent(editingComment.content);
-      setMessage('');
-    } else {
-      setContent('');
-      setMessage('');
-    }
-  }, [editingComment]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,15 +27,14 @@ function CommentForm({
         await updateComment(
           ticketId,
           editingComment._id,
-          content,
-          token
+          content
         );
 
         setContent('');
         setMessage('Comment updated successfully!');
         onCommentUpdated();
       } else {
-        await createComment(ticketId, content, token);
+        await createComment(ticketId, content);
 
         setContent('');
         setMessage('Comment added successfully!');

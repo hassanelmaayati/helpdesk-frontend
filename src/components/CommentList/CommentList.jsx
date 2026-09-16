@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import {
   getComments,
@@ -6,28 +5,30 @@ import {
 } from '../../services/commentService';
 import './CommentList.css';
 
-function CommentList({
-  ticketId,
-  token,
-  refresh,
-  onEdit
-}) {
+function CommentList({ ticketId, refresh, onEdit }) {
   const [comments, setComments] = useState([]);
   const [message, setMessage] = useState('');
 
-  const loadComments = async () => {
-    try {
-      const data = await getComments(ticketId, token);
-      setComments(data);
-      setMessage('');
-    } catch (error) {
-      setMessage(error.message);
-    }
-  };
-
   useEffect(() => {
-    loadComments();
-  }, [ticketId, token, refresh]);
+    let active = true;
+
+    getComments(ticketId)
+      .then((data) => {
+        if (!active) return;
+
+        setComments(Array.isArray(data) ? data : []);
+        setMessage('');
+      })
+      .catch((error) => {
+        if (!active) return;
+
+        setMessage(error.message);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [ticketId, refresh]);
 
   const handleDelete = async (commentId) => {
     const confirmed = window.confirm(
@@ -37,8 +38,14 @@ function CommentList({
     if (!confirmed) return;
 
     try {
-      await deleteComment(ticketId, commentId, token);
-      await loadComments();
+      await deleteComment(ticketId, commentId);
+
+      setComments((currentComments) =>
+        currentComments.filter(
+          (comment) => comment._id !== commentId
+        )
+      );
+
       setMessage('Comment deleted successfully!');
     } catch (error) {
       setMessage(error.message);
@@ -78,8 +85,7 @@ function CommentList({
                   className="comment-edit-button"
                   onClick={() => onEdit(comment)}
                 >
-                    Edit comment
-
+                  Edit comment
                 </button>
 
                 <button
@@ -87,8 +93,7 @@ function CommentList({
                   className="comment-delete-button"
                   onClick={() => handleDelete(comment._id)}
                 >
-                    Delete comment
-
+                  Delete comment
                 </button>
               </div>
             </article>
