@@ -5,9 +5,9 @@ import './TicketList.css';
 function TicketList({ tickets = [] }) {
   return (
     <div className="inbox-container">
-      {/* Action Toolbar */}
       <div className="inbox-toolbar">
         <input type="checkbox" className="select-all-checkbox" />
+
         <select className="toolbar-select">
           <option>10</option>
           <option>25</option>
@@ -15,58 +15,111 @@ function TicketList({ tickets = [] }) {
         </select>
       </div>
 
-      {/* Ticket List View */}
       <div className="inbox-ticket-list">
         {tickets.length > 0 ? (
-          tickets.map((ticket, index) => (
-            <Link
-              to={`/tickets/${ticket._id}`}
-              key={ticket.id || ticket._id || index}
-              className="inbox-ticket-card"
-            >
-              <div className="card-left-section">
-                <input type="checkbox" className="ticket-checkbox" />
+          tickets.map((ticket, index) => {
+            const ticketId = ticket._id || ticket.id || '';
+            const shortId = ticketId
+              ? ticketId.slice(-6).toUpperCase()
+              : `00000${index + 1}`;
 
-                <div className="user-avatar">
-                  {ticket.createdByName ? ticket.createdByName.charAt(0) : 'U'}
-                </div>
+            const subject =
+              ticket.subject || ticket.title || 'Ticket Subject';
 
-                <div className="ticket-details">
-                  <div className="ticket-title-row">
-                    <span className="ticket-ref-id">
-                      (#{ticket.ticketId || ticket.id || `HOSK-AAA4-00${index + 1}`})
-                    </span>
+            const status = ticket.status || 'Open';
 
-                    <span className="ticket-subject">
-                      {ticket.title || ticket.subject || 'Ticket Subject'}
-                    </span>
+            const creator =
+              ticket.createdBy?.name ||
+              ticket.user?.name ||
+              ticket.createdByName ||
+              'User';
+
+            const assignedTo =
+              ticket.assignedTo?.name ||
+              ticket.assignedTo ||
+              'Unassigned';
+
+            const department =
+              ticket.department || 'Support';
+
+            const messageCount =
+              ticket.messages?.length || 1;
+
+            return (
+              <Link
+                to={`/tickets/${ticketId}`}
+                key={ticketId || index}
+                className="inbox-ticket-card"
+              >
+                <div className="card-left-section">
+                  <input
+                    type="checkbox"
+                    className="ticket-checkbox"
+                    onClick={(event) => event.stopPropagation()}
+                  />
+
+                  <div className="user-avatar">
+                    {creator.charAt(0).toUpperCase()}
                   </div>
 
-                  <div className="ticket-meta">
-                    From: <span className="meta-bold">{ticket.createdByName || 'User'}</span> | 
-                    Assigned To: <span className="meta-bold">{ticket.assignedTo || 'Unassigned'}</span> | 
-                    Department: <span className="meta-highlight">{ticket.department || 'Support'}</span>
+                  <div className="ticket-details">
+                    <div className="ticket-title-row">
+                      <span className="ticket-ref-id">
+                        (#{shortId})
+                      </span>
+
+                      <span className="ticket-subject">
+                        {subject}
+                      </span>
+
+                      <span className="ticket-message-count">
+                        ({messageCount})
+                      </span>
+
+                      <span className="ticket-unread-dot"></span>
+                    </div>
+
+                    <div className="ticket-meta">
+                      <span>From:</span>
+                      <strong>{creator}</strong>
+
+                      <span className="meta-separator">•</span>
+
+                      <span>Assigned To:</span>
+                      <strong
+                        className={
+                          assignedTo === 'Unassigned'
+                            ? 'unassigned'
+                            : ''
+                        }
+                      >
+                        {assignedTo}
+                      </strong>
+
+                      <span className="meta-separator">•</span>
+
+                      <span>Department:</span>
+                      <strong>{department}</strong>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="card-right-section">
-                <span
-                  className={`status-badge ${
-                    ticket.priority?.toLowerCase() === 'high'
-                      ? 'overdue'
-                      : 'due-today'
-                  }`}
-                >
-                  {ticket.priority?.toLowerCase() === 'high'
-                    ? 'Overdue'
-                    : 'Due Today'}
-                </span>
-              </div>
-            </Link>
-          ))
+                <div className="card-right-section">
+                  <span
+                    className={`status-badge ${status
+                      .toLowerCase()
+                      .replace(/\s+/g, '-')}`}
+                  >
+                    {status}
+                  </span>
+                </div>
+              </Link>
+            );
+          })
         ) : (
-          <p className="empty-state-text">No tickets found.</p>
+          <p className="empty-state-text">
+            No tickets found.
+          </p>
         )}
       </div>
     </div>
