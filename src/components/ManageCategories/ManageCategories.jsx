@@ -12,52 +12,70 @@ function ManageCategories() {
   const [categories, setCategories] = useState([])
   const [name, setName] = useState('')
   const [editId, setEditId] = useState(null)
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-
-    createCategory(name, localStorage.getItem('token'))
-      .then((data) => {
-        setCategories((currentCategories) => [
-          ...currentCategories,
-          data
-        ])
-      })
-
-    setName('')
-  }
-
-  const handleDelete = (id) => {
-    deleteCategory(id, localStorage.getItem('token'))
-      .then(() => {
-        setCategories((currentCategories) =>
-          currentCategories.filter(
-            (category) => category._id !== id
-          )
-        )
-      })
-  }
-
-  const handleUpdate = (id) => {
-    updateCategory(id, name, localStorage.getItem('token'))
-      .then((data) => {
-        setCategories((currentCategories) =>
-          currentCategories.map((category) =>
-            category._id === id ? data : category
-          )
-        )
-
-        setName('')
-        setEditId(null)
-      })
-  }
+  const [editName, setEditName] = useState('')
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
-    indexCategory(localStorage.getItem('token'))
+    indexCategory()
       .then((data) => {
-        setCategories(data)
+        setCategories(Array.isArray(data) ? data : [])
+      })
+      .catch((error) => {
+        setMessage(error.message)
       })
   }, [])
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    try {
+      const newCategory = await createCategory(name)
+
+      setCategories((currentCategories) => [
+        ...currentCategories,
+        newCategory
+      ])
+
+      setName('')
+      setMessage('')
+    } catch (error) {
+      setMessage(error.message)
+    }
+  }
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteCategory(id)
+
+      setCategories((currentCategories) =>
+        currentCategories.filter(
+          (category) => category._id !== id
+        )
+      )
+
+      setMessage('')
+    } catch (error) {
+      setMessage(error.message)
+    }
+  }
+
+  const handleUpdate = async (id) => {
+    try {
+      const updatedCategory = await updateCategory(id, editName)
+
+      setCategories((currentCategories) =>
+        currentCategories.map((category) =>
+          category._id === id ? updatedCategory : category
+        )
+      )
+
+      setEditName('')
+      setEditId(null)
+      setMessage('')
+    } catch (error) {
+      setMessage(error.message)
+    }
+  }
 
   return (
     <div className="category-page-layout">
@@ -99,6 +117,12 @@ function ManageCategories() {
                 Add Category
               </button>
             </div>
+
+            {message && (
+              <p className="category-form-message">
+                {message}
+              </p>
+            )}
           </form>
 
           <div className="category-list">
@@ -114,9 +138,9 @@ function ManageCategories() {
                 {editId === category._id ? (
                   <input
                     className="category-edit-input"
-                    value={name}
+                    value={editName}
                     onChange={(event) =>
-                      setName(event.target.value)
+                      setEditName(event.target.value)
                     }
                   />
                 ) : (
@@ -140,7 +164,7 @@ function ManageCategories() {
                       className="category-edit-button"
                       onClick={() => {
                         setEditId(category._id)
-                        setName(category.name)
+                        setEditName(category.name)
                       }}
                     >
                       Edit
