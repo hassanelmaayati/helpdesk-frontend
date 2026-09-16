@@ -12,8 +12,9 @@ function EmployeeDashboard() {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const res = await api.get('/tickets');
 
+        const res = await api.get('/tickets/my');
+        
         if (Array.isArray(res.data)) {
           setTickets(res.data);
         } else if (res.data && Array.isArray(res.data.tickets)) {
@@ -44,7 +45,13 @@ function EmployeeDashboard() {
     (ticket) => ticket.status === 'Resolved'
   ).length;
 
-  const recentTickets = tickets.slice(0, 4);
+
+  const recentTickets = [...tickets]
+  .sort(
+    (a, b) =>
+      new Date(b.createdAt) - new Date(a.createdAt)
+  )
+  .slice(0, 6);
 
   return (
     <div className="employee-dashboard-layout">
@@ -53,14 +60,14 @@ function EmployeeDashboard() {
       <main className="employee-dashboard-content">
         <header className="employee-dashboard-header">
           <div>
-            <h1>EMPLOYEE DASHBOARD</h1>
+            <h1>Employee Dashboard</h1>
             <p>Overview of your support requests</p>
           </div>
         </header>
 
         <section className="employee-stats">
           <div className="employee-stat-card">
-            <span className="stat-label">OPEN TICKETS</span>
+            <span className="stat-label">Open Tickets</span>
             <strong>{openTickets}</strong>
             <span className="stat-description">
               Requests currently open
@@ -68,7 +75,7 @@ function EmployeeDashboard() {
           </div>
 
           <div className="employee-stat-card">
-            <span className="stat-label">IN PROGRESS</span>
+            <span className="stat-label">In-Progress</span>
             <strong>{inProgressTickets}</strong>
             <span className="stat-description">
               Requests being handled
@@ -76,7 +83,7 @@ function EmployeeDashboard() {
           </div>
 
           <div className="employee-stat-card">
-            <span className="stat-label">RESOLVED</span>
+            <span className="stat-label">Resolved</span>
             <strong>{resolvedTickets}</strong>
             <span className="stat-description">
               Requests completed
@@ -92,7 +99,7 @@ function EmployeeDashboard() {
               to="/my-tickets"
               className="view-all-link"
             >
-              VIEW ALL
+              View All
             </Link>
           </div>
 

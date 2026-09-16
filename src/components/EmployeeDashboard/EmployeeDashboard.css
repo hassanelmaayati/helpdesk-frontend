@@ -6,36 +6,43 @@
 
 .employee-dashboard-content {
   flex: 1;
-  padding: 40px;
+  padding: 34px 42px 50px;
   margin-left: 240px;
+  box-sizing: border-box;
 }
+
+/* Dashboard Header */
 
 .employee-dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0;
+  margin-bottom: 26px;
 }
 
 .employee-dashboard-header h1 {
   margin: 0;
-  font-size: 26px;
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: 0.5px;
+  color: #002244;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: 0;
 }
 
 .employee-dashboard-header p {
-  margin: 6px 0 0;
-  color: #64748b;
-  font-size: 14px;
+  margin: 9px 0 0;
+  color: #718096;
+  font-size: 17px;
+  line-height: 1.5;
 }
+
+/* Statistics */
 
 .employee-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin: 0;
+  margin: 0 0 26px;
   padding: 0;
   width: 100%;
 }
@@ -59,27 +66,31 @@
 .employee-stat-card:nth-child(3) {
   border-top: 4px solid #10b981;
 }
-
-.stat-label {
+.employee-stat-card .stat-label {
   display: block;
-  color: #64748b;
-  font-size: 11px;
+  color: #334155;
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: 0.7px;
+  line-height: 1.4;
+  letter-spacing: 0;
 }
 
 .employee-stat-card strong {
   display: block;
-  margin: 6px 0 2px;
+  margin: 6px 0 3px;
   color: #0f172a;
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 700;
+  line-height: 1.3;
 }
 
 .stat-description {
-  color: #94a3b8;
-  font-size: 11px;
+  color: #64748b;
+  font-size: 16px;
+  line-height: 1.5;
 }
+
+/* Tickets Section */
 
 .employee-dashboard-section {
   width: 100%;
@@ -101,21 +112,25 @@
 
 .section-header-inbox h2 {
   margin: 0;
-  color: #0f172a;
-  font-size: 18px;
+  color: #334155;
+  font-size: 22px;
   font-weight: 700;
+  line-height: 1.4;
 }
 
 .view-all-link {
-  color: #009ef7;
+  color: #0084c7;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
+  line-height: 1.4;
 }
 
 .view-all-link:hover {
   text-decoration: underline;
 }
+
+/* Ticket List */
 
 .ticket-list-container {
   display: flex;
@@ -127,7 +142,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding: 20px 24px;
+  min-height: 82px;
+  box-sizing: border-box;
   text-decoration: none;
   background: #ffffff;
   border-bottom: 1px solid #f1f5f9;
@@ -149,9 +166,9 @@
   color: #0f172a;
   font-weight: 700;
   background: #f1f5f9;
-  padding: 4px 7px;
-  border-radius: 4px;
-  font-size: 11px;
+  padding: 6px 9px;
+  border-radius: 5px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 
@@ -162,70 +179,81 @@
 }
 
 .employee-ticket-title {
-  color: #009ef7;
-  font-size: 13px;
-  font-weight: 600;
+  color: #0084c7;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.5;
 }
 
 .employee-ticket-meta {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   color: #64748b;
-  font-size: 12px;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
 .employee-ticket-meta strong {
   color: #334155;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .meta-separator {
   color: #cbd5e1;
-  font-size: 10px;
+  font-size: 13px;
 }
+
+/* Status Badge */
 
 .employee-ticket-status {
   flex-shrink: 0;
-  margin-left: 16px;
-  font-size: 11px;
+  margin-left: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 15px;
+  border-radius: 7px;
+  font-size: 14px;
   font-weight: 700;
-  padding: 5px 10px;
-  border-radius: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
 }
 
 .employee-ticket-status.open {
-  background: #dbeafe;
-  color: #2563eb;
-  border: 1px solid #bfdbfe;
+  background-color: #e0f2fe;
+  color: #0369a1;
 }
 
 .employee-ticket-status.in-progress {
-  background: #fef3c7;
-  color: #d97706;
-  border: 1px solid #fde68a;
+  background-color: #fef3c7;
+  color: #b45309;
 }
 
 .employee-ticket-status.resolved {
-  background: #dcfce7;
-  color: #16a34a;
-  border: 1px solid #bbf7d0;
+  background-color: #d1fae5;
+  color: #047857;
 }
+
+/* Loading */
 
 .dashboard-message {
   padding: 30px 20px;
   text-align: center;
   color: #64748b;
-  font-size: 13px;
+  font-size: 15px;
+  line-height: 1.5;
   background: #ffffff;
 }
+
+/* Tablet */
 
 @media (max-width: 900px) {
   .employee-dashboard-content {
     margin-left: 0;
-    padding: 20px;
+    padding: 28px 24px;
   }
 
   .employee-dashboard-header {
@@ -247,7 +275,17 @@
   }
 }
 
+/* Mobile */
+
 @media (max-width: 600px) {
+  .employee-dashboard-content {
+    padding: 20px 16px;
+  }
+
+  .employee-dashboard-header h1 {
+    font-size: 26px;
+  }
+
   .employee-ticket-card {
     flex-direction: column;
   }
