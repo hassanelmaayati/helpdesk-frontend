@@ -1,0 +1,92 @@
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.comment-form h2 {
+  margin: 0;
+  color: #002244;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.comment-textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 12px 14px;
+  border: 1px solid #dce5ed;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #002244;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+}
+
+.comment-textarea::placeholder {
+  color: #9aa9b7;
+}
+
+.comment-textarea:focus {
+  border-color: #0084c7;
+  box-shadow: 0 0 0 3px rgba(0, 132, 199, 0.08);
+}
+
+.comment-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.comment-submit-button,
+.comment-cancel-button {
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+}
+
+.comment-submit-button {
+  border: 1px solid #facc14;
+  background: #facc14;
+  color: #002244;
+}
+
+.comment-submit-button:hover {
+  background: #f8c400;
+}
+
+.comment-cancel-button {
+  border: 1px solid #d5dfe8;
+  background: #ffffff;
+  color: #334155;
+}
+
+.comment-cancel-button:hover {
+  background: #f8fafc;
+}
+
+.comment-form-message {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .comment-form-actions {
+    flex-direction: column;
+  }
+
+  .comment-submit-button,
+  .comment-cancel-button {
+    width: 100%;
+  }
+}

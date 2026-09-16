@@ -1,0 +1,144 @@
+.it-dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.it-dashboard-content {
+  flex: 1;
+  padding: 40px;
+  margin-left: 240px;
+}
+
+.it-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.it-dashboard-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 0.5px;
+}
+
+.it-dashboard-header p {
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.it-stats {
+  margin-bottom: 16px;
+  width: 100%;
+  padding: 0;
+}
+
+.it-stats section {
+  width: 100%;
+  padding: 0;
+}
+
+.it-dashboard-section {
+  width: 100%;
+  padding: 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+
+.it-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.it-section-header h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ticket-filter {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 12px;
+}
+
+.ticket-filter:focus {
+  outline: none;
+  border-color: #009ef7;
+}
+
+.quick-action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 0;
+}
+
+.quick-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  color: #334155;
+  background: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.quick-action-button:hover {
+  background: #f8fafc;
+}
+
+.quick-action-button.primary {
+  border-color: #009ef7;
+  background: #009ef7;
+  color: #ffffff;
+}
+
+.quick-action-button.primary:hover {
+  background: #0082c8;
+}
+
+@media (max-width: 900px) {
+  .it-dashboard-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .it-dashboard-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .it-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .quick-action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .quick-action-button {
+    width: 100%;
+  }
+}

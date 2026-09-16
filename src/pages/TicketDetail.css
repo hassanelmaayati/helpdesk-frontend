@@ -1,0 +1,250 @@
+.ticket-detail-layout {
+  min-height: 100vh;
+  background: #f4f7fb;
+}
+
+.ticket-detail-page {
+  min-height: 100vh;
+  margin-left: 240px;
+  padding: 40px;
+  background: #f4f7fb;
+}
+
+.ticket-detail-header {
+  margin-bottom: 28px;
+}
+
+.ticket-detail-header h2 {
+  margin: 0;
+  color: #002244;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+
+.ticket-detail-header p {
+  margin: 7px 0 0;
+  color: #7b8e9f;
+  font-size: 14px;
+}
+
+.ticket-detail-container {
+  max-width: 900px;
+  background: #ffffff;
+  border: 1px solid #e3ebf2;
+  border-radius: 14px;
+  padding: 32px;
+  box-shadow: 0 4px 15px rgba(0, 34, 68, 0.04);
+}
+
+.ticket-detail-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8eef4;
+}
+
+.ticket-detail-id {
+  color: #7b8e9f;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ticket-detail-top h1 {
+  margin: 7px 0 0;
+  color: #002244;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.ticket-detail-status {
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ticket-detail-status.open {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.ticket-detail-status.in-progress {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.ticket-detail-status.resolved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.ticket-detail-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  padding: 24px 0;
+  border-bottom: 1px solid #e8eef4;
+}
+
+.ticket-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.ticket-info-label {
+  color: #7b8e9f;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.ticket-info-value {
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ticket-detail-section {
+  padding: 24px 0;
+}
+
+.ticket-detail-section h3 {
+  margin: 0 0 10px;
+  color: #002244;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.ticket-detail-section p {
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.ticket-detail-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid #e8eef4;
+}
+
+.ticket-edit-button,
+.ticket-delete-button {
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ticket-edit-button {
+  border: 1px solid #facc14;
+  background: #facc14;
+  color: #002244;
+}
+
+.ticket-edit-button:hover {
+  background: #f8c400;
+}
+
+.ticket-delete-button {
+  border: 1px solid #f1b8b8;
+  background: #fff5f5;
+  color: #b42318;
+}
+
+.ticket-delete-button:hover {
+  background: #feeaea;
+}
+
+.ticket-comments-container {
+  max-width: 900px;
+  margin-top: 28px;
+  background: #ffffff;
+  border: 1px solid #e3ebf2;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 34, 68, 0.04);
+}
+
+.ticket-comments-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e8eef4;
+}
+
+.ticket-comments-header h3 {
+  margin: 0;
+  color: #002244;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.ticket-detail-loading {
+  min-height: 100vh;
+  margin-left: 240px;
+  padding: 40px;
+  background: #f4f7fb;
+  color: #64748b;
+}
+
+@media (max-width: 900px) {
+  .ticket-detail-page {
+    margin-left: 210px;
+    padding: 28px;
+  }
+
+  .ticket-detail-container,
+  .ticket-comments-container {
+    padding: 26px;
+  }
+}
+
+@media (max-width: 700px) {
+  .ticket-detail-page {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .ticket-detail-container {
+    padding: 20px;
+  }
+
+  .ticket-detail-top {
+    flex-direction: column;
+  }
+
+  .ticket-detail-info {
+    grid-template-columns: 1fr;
+  }
+
+  .ticket-detail-actions {
+    flex-direction: column;
+  }
+
+  .ticket-edit-button,
+  .ticket-delete-button {
+    width: 100%;
+  }
+
+  .ticket-comments-container {
+    margin-top: 20px;
+  }
+}

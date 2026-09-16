@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getComments, deleteComment } from '../../services/commentService';
 import CommentForm from '../CommentForm/CommentForm';
+import './CommentList.css';
 
 function CommentList({ ticketId, token }) {
   const [comments, setComments] = useState([]);
@@ -36,46 +37,58 @@ function CommentList({ ticketId, token }) {
   };
 
   return (
-    <section>
-      <h2>Comments</h2>
+    <section className="comment-section">
+      <div className="comment-section-header">
+        <h2>COMMENTS</h2>
+      </div>
 
-      {message && <p>{message}</p>}
+      <div className="comment-list">
+        {message && <p className="comment-message">{message}</p>}
 
-      {comments.length === 0 ? (
-        <p>No comments yet.</p>
-      ) : (
-        comments.map((comment) => (
-          <article key={comment._id}>
-            <p>{comment.content}</p>
+        {comments.length === 0 ? (
+          <p className="no-comments">No comments yet.</p>
+        ) : (
+          comments.map((comment) => (
+            <article className="comment-card" key={comment._id}>
+              <div className="comment-content">
+                <p>{comment.content}</p>
 
-            <p>
-              By: {comment.author?.name || 'Unknown user'}
-            </p>
+                <span className="comment-author">
+                  By: {comment.author?.name || 'Unknown user'}
+                </span>
+              </div>
 
-            <button
-              type="button"
-              onClick={() => setEditingComment(comment)}
-            >
-              Edit
-            </button>
+              <div className="comment-actions">
+                <button
+                  type="button"
+                  className="comment-edit-button"
+                  onClick={() => setEditingComment(comment)}
+                >
+                  EDIT
+                </button>
 
-            <button
-              type="button"
-              onClick={() => handleDelete(comment._id)}
-            >
-              Delete
-            </button>
-          </article>
-        ))
-      )}
+                <button
+                  type="button"
+                  className="comment-delete-button"
+                  onClick={() => handleDelete(comment._id)}
+                >
+                  DELETE
+                </button>
+              </div>
+            </article>
+          ))
+        )}
+      </div>
 
-      <CommentForm
-        ticketId={ticketId}
-        token={token}
-        editingComment={editingComment}
-        onCommentUpdated={handleCommentUpdated}
-        onCancelEdit={() => setEditingComment(null)}
-      />
+      <div className="comment-form-container">
+        <CommentForm
+          ticketId={ticketId}
+          token={token}
+          editingComment={editingComment}
+          onCommentUpdated={handleCommentUpdated}
+          onCancelEdit={() => setEditingComment(null)}
+        />
+      </div>
     </section>
   );
 }
