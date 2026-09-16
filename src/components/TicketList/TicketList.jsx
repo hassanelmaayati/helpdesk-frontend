@@ -19,31 +19,18 @@ function TicketList({ tickets = [] }) {
         {tickets.length > 0 ? (
           tickets.map((ticket, index) => {
             const ticketId = ticket._id || ticket.id || '';
-            const shortId = ticketId
-              ? ticketId.slice(-6).toUpperCase()
-              : `00000${index + 1}`;
 
-            const subject =
-              ticket.subject || ticket.title || 'Ticket Subject';
+            const title =
+              ticket.title || 'Ticket Title';
 
-            const status = ticket.status || 'Open';
+            const category =
+              ticket.category?.name || 'No Category';
 
-            const creator =
-              ticket.createdBy?.name ||
-              ticket.user?.name ||
-              ticket.createdByName ||
-              'User';
+            const priority =
+              ticket.priority || 'No Priority';
 
-            const assignedTo =
-              ticket.assignedTo?.name ||
-              ticket.assignedTo ||
-              'Unassigned';
-
-            const department =
-              ticket.department || 'Support';
-
-            const messageCount =
-              ticket.messages?.length || 1;
+            const status =
+              ticket.status || 'Open';
 
             return (
               <Link
@@ -52,54 +39,21 @@ function TicketList({ tickets = [] }) {
                 className="inbox-ticket-card"
               >
                 <div className="card-left-section">
-                  <input
-                    type="checkbox"
-                    className="ticket-checkbox"
-                    onClick={(event) => event.stopPropagation()}
-                  />
-
-                  <div className="user-avatar">
-                    {creator.charAt(0).toUpperCase()}
-                  </div>
-
                   <div className="ticket-details">
                     <div className="ticket-title-row">
-                      <span className="ticket-ref-id">
-                        (#{shortId})
-                      </span>
-
                       <span className="ticket-subject">
-                        {subject}
+                        {title}
                       </span>
-
-                      <span className="ticket-message-count">
-                        ({messageCount})
-                      </span>
-
-                      <span className="ticket-unread-dot"></span>
                     </div>
 
                     <div className="ticket-meta">
-                      <span>From:</span>
-                      <strong>{creator}</strong>
+                      <span>Category:</span>
+                      <strong>{category}</strong>
 
                       <span className="meta-separator">•</span>
 
-                      <span>Assigned To:</span>
-                      <strong
-                        className={
-                          assignedTo === 'Unassigned'
-                            ? 'unassigned'
-                            : ''
-                        }
-                      >
-                        {assignedTo}
-                      </strong>
-
-                      <span className="meta-separator">•</span>
-
-                      <span>Department:</span>
-                      <strong>{department}</strong>
+                      <span>Priority:</span>
+                      <strong>{priority}</strong>
                     </div>
                   </div>
                 </div>

@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { getTicket, deleteTicket } from '../services/ticketService';
+import {
+  getTicket,
+  deleteTicket,
+  updateTicketStatus
+} from '../services/ticketService';
 import { useAuth } from '../context/useAuth';
 import CommentList from '../components/CommentList/CommentList';
 import Sidebar from '../components/Sidebar/Sidebar';
@@ -11,9 +15,13 @@ function TicketDetail() {
   const navigate = useNavigate();
   const { user, token } = useAuth();
   const [ticket, setTicket] = useState(null);
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
-    getTicket(id).then((res) => setTicket(res.data));
+    getTicket(id).then((res) => {
+      setTicket(res.data);
+      setStatus(res.data.status);
+    });
   }, [id]);
 
   const handleDelete = async () => {
@@ -23,9 +31,19 @@ function TicketDetail() {
     }
   };
 
+  const handleStatusUpdate = async () => {
+    try {
+      const res = await updateTicketStatus(id, status);
+      setTicket(res.data);
+    } catch (err) {
+      console.error('Failed to update ticket status:', err);
+    }
+  };
+
   if (!ticket) return <div className="ticket-detail-loading">Loading...</div>;
 
   const isOwner = ticket.createdBy._id === user._id;
+  const isITStaff = user?.role === 'it-staff';
 
   return (
     <div className="ticket-detail-layout">
@@ -91,23 +109,46 @@ function TicketDetail() {
             <p>{ticket.description}</p>
           </div>
 
-          {isOwner && (
-            <div className="ticket-detail-actions">
-              <Link
-                to={`/tickets/${id}/edit`}
-                className="ticket-edit-button"
-              >
-                EDIT TICKET
-              </Link>
+          <div className="ticket-detail-actions">
+            {isITStaff && (
+              <>
+                <select
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  className="ticket-detail-status"
+                >
+                  <option value="Open">Open</option>
+                  <option value="In-Progress">In-Progress</option>
+                  <option value="Resolved">Resolved</option>
+                </select>
 
-              <button
-                onClick={handleDelete}
-                className="ticket-delete-button"
-              >
-                DELETE TICKET
-              </button>
-            </div>
-          )}
+                <button
+                  onClick={handleStatusUpdate}
+                  className="ticket-edit-button"
+                >
+                  UPDATE STATUS
+                </button>
+              </>
+            )}
+
+            {isOwner && (
+              <>
+                <Link
+                  to={`/tickets/${id}/edit`}
+                  className="ticket-edit-button"
+                >
+                  EDIT TICKET
+                </Link>
+
+                <button
+                  onClick={handleDelete}
+                  className="ticket-delete-button"
+                >
+                  DELETE TICKET
+                </button>
+              </>
+            )}
+          </div>
         </div>
 
         <div className="ticket-comments-container">

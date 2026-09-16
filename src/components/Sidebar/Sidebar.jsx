@@ -4,7 +4,8 @@ import {
   Ticket,
   Plus,
   Folder,
-  LogOut
+  LogOut,
+  List
 } from 'lucide-react';
 import { useAuth } from '../../context/useAuth';
 import './Sidebar.css';
@@ -20,23 +21,17 @@ function Sidebar() {
 
       <nav className="sidebar-nav">
         <NavLink
-          to={user?.role === 'it-staff' ? '/it-dashboard' : '/employee-dashboard'}
+          to={
+            user?.role === 'it-staff'
+              ? '/it-dashboard'
+              : '/employee-dashboard'
+          }
           className={({ isActive }) =>
             isActive ? 'nav-item active' : 'nav-item'
           }
         >
           <LayoutDashboard className="nav-icon" size={19} />
           <span>Dashboard</span>
-        </NavLink>
-
-        <NavLink
-          to="/my-tickets"
-          className={({ isActive }) =>
-            isActive ? 'nav-item active' : 'nav-item'
-          }
-        >
-          <Ticket className="nav-icon" size={19} />
-          <span>My Tickets</span>
         </NavLink>
 
         <NavLink
@@ -49,8 +44,28 @@ function Sidebar() {
           <span>Create Ticket</span>
         </NavLink>
 
+        <NavLink
+          to="/my-tickets"
+          className={({ isActive }) =>
+            isActive ? 'nav-item active' : 'nav-item'
+          }
+        >
+          <Ticket className="nav-icon" size={19} />
+          <span>My Tickets</span>
+        </NavLink>
+
         {user?.role === 'it-staff' && (
           <>
+            <NavLink
+              to="/all-tickets"
+              className={({ isActive }) =>
+                isActive ? 'nav-item active' : 'nav-item'
+              }
+            >
+              <List className="nav-icon" size={19} />
+              <span>All Tickets</span>
+            </NavLink>
+
             <div className="sidebar-divider"></div>
 
             <NavLink

@@ -30,10 +30,15 @@ function App() {
           element={<EmployeeDashboard />}
         />
 
-        <Route
-          path="/it-dashboard"
-          element={<ITStaffDashboard />}
-        />
+      <Route
+  path="/it-dashboard"
+  element={<ITStaffDashboard />}
+/>
+
+<Route
+  path="/all-tickets"
+  element={<ITStaffDashboard />}
+/>
 
         <Route
           path="/my-tickets"
