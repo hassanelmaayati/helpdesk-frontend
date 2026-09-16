@@ -56,22 +56,6 @@ function EmployeeDashboard() {
             <h1>EMPLOYEE DASHBOARD</h1>
             <p>Overview of your support requests</p>
           </div>
-
-          <div className="quick-action-buttons">
-            <Link
-              to="/tickets/new"
-              className="quick-action-button primary"
-            >
-              NEW TICKET
-            </Link>
-
-            <Link
-              to="/my-tickets"
-              className="quick-action-button"
-            >
-              MY TICKETS
-            </Link>
-          </div>
         </header>
 
         <section className="employee-stats">

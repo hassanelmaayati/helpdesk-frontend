@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
 
 .employee-dashboard-header h1 {
@@ -35,7 +35,8 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin-bottom: 16px;
+  margin: 0;
+  padding: 0;
   width: 100%;
 }
 
@@ -44,6 +45,7 @@
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 20px 24px;
+  margin: 0;
 }
 
 .employee-stat-card:nth-child(1) {
@@ -82,10 +84,10 @@
 .employee-dashboard-section {
   width: 100%;
   padding: 0;
+  margin: 0;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
-  margin-bottom: 28px;
   overflow: hidden;
 }
 
@@ -113,41 +115,6 @@
 
 .view-all-link:hover {
   text-decoration: underline;
-}
-
-.quick-action-buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 0;
-}
-
-.quick-action-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px;
-  border: 1px solid #cbd5e1;
-  border-radius: 7px;
-  color: #334155;
-  background: #ffffff;
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-}
-
-.quick-action-button:hover {
-  background: #f8fafc;
-}
-
-.quick-action-button.primary {
-  border-color: #009ef7;
-  background: #009ef7;
-  color: #ffffff;
-}
-
-.quick-action-button.primary:hover {
-  background: #0082c8;
 }
 
 .ticket-list-container {
@@ -268,15 +235,6 @@
 
   .employee-stats {
     grid-template-columns: 1fr;
-  }
-
-  .quick-action-buttons {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .quick-action-button {
-    width: 100%;
   }
 
   .employee-ticket-card {
