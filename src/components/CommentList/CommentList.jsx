@@ -1,44 +1,48 @@
 import { useEffect, useState } from 'react';
-import {
-  getComments,
-  deleteComment
-} from '../../services/commentService';
+import { getComments, deleteComment } from '../../services/commentService';
+import { useAuth } from '../../context/useAuth';
 import './CommentList.css';
 
 function CommentList({ ticketId, refresh, onEdit }) {
+  const { token } = useAuth();
+
   const [comments, setComments] = useState([]);
   const [message, setMessage] = useState('');
 
+  const getCurrentUserId = () => {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload._id;
+    } catch {
+      return null;
+    }
+  };
+
+  const currentUserId = token ? getCurrentUserId() : null;
+
+  const loadComments = async () => {
+    try {
+      const data = await getComments(ticketId, token);
+      setComments(Array.isArray(data) ? data : []);
+      setMessage('');
+    } catch (error) {
+      setMessage(error.message);
+    }
+  };
+
   useEffect(() => {
-    let active = true;
+    if (!token) return;
 
-    getComments(ticketId)
-      .then((data) => {
-        if (!active) return;
-
-        setComments(Array.isArray(data) ? data : []);
-        setMessage('');
-      })
-      .catch((error) => {
-        if (!active) return;
-
-        setMessage(error.message);
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [ticketId, refresh]);
+    loadComments();
+  }, [ticketId, token, refresh]);
 
   const handleDelete = async (commentId) => {
-    const confirmed = window.confirm(
-      'Delete this comment?'
-    );
+    const confirmed = window.confirm('Delete this comment?');
 
     if (!confirmed) return;
 
     try {
-      await deleteComment(ticketId, commentId);
+      await deleteComment(ticketId, commentId, token);
 
       setComments((currentComments) =>
         currentComments.filter(
@@ -56,48 +60,53 @@ function CommentList({ ticketId, refresh, onEdit }) {
     <section className="comment-section">
       <div className="comment-list">
         {message && (
-          <p className="comment-message">
-            {message}
-          </p>
+          <p className="comment-message">{message}</p>
         )}
 
         {comments.length === 0 ? (
-          <p className="no-comments">
-            No comments yet.
-          </p>
+          <p className="no-comments">No comments yet.</p>
         ) : (
-          comments.map((comment) => (
-            <article
-              className="comment-card"
-              key={comment._id}
-            >
-              <div className="comment-content">
-                <p>{comment.content}</p>
+          comments.map((comment) => {
+            const isCommentOwner =
+              comment.author?._id &&
+              currentUserId &&
+              String(comment.author._id) === String(currentUserId);
 
-                <span className="comment-author">
-                  By: {comment.author?.name || 'Unknown user'}
-                </span>
-              </div>
+            return (
+              <article
+                className="comment-card"
+                key={comment._id}
+              >
+                <div className="comment-content">
+                  <p>{comment.content}</p>
 
-              <div className="comment-actions">
-                <button
-                  type="button"
-                  className="comment-edit-button"
-                  onClick={() => onEdit(comment)}
-                >
-                  Edit comment
-                </button>
+                  <span className="comment-author">
+                    By: {comment.author?.name || 'Unknown user'}
+                  </span>
+                </div>
 
-                <button
-                  type="button"
-                  className="comment-delete-button"
-                  onClick={() => handleDelete(comment._id)}
-                >
-                  Delete comment
-                </button>
-              </div>
-            </article>
-          ))
+                {isCommentOwner && (
+                  <div className="comment-actions">
+                    <button
+                      type="button"
+                      className="comment-edit-button"
+                      onClick={() => onEdit(comment)}
+                    >
+                      Edit comment
+                    </button>
+
+                    <button
+                      type="button"
+                      className="comment-delete-button"
+                      onClick={() => handleDelete(comment._id)}
+                    >
+                      Delete comment
+                    </button>
+                  </div>
+                )}
+              </article>
+            );
+          })
         )}
       </div>
     </section>
