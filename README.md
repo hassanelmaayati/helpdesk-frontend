@@ -21,7 +21,7 @@ We built this because IT support requests at many workplaces get lost in email o
 
 ## Getting Started
 
-- [Deployed app](https://helpdesk-frontend-ga-94a0.vercel.app/)
+- [Deployed app](https://helpdesk-frontend-iota-three.vercel.app/)
 - [Planning Materials (Trello)](https://trello.com/b/fqiYl2Yv/helpdesk-project-board)
 - [Back-end Repository](https://github.com/hassanelmaayati/helpdesk-backend.git)
 
